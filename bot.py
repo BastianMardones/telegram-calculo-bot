@@ -6,6 +6,7 @@ import json
 import math
 import html
 import sys
+import time
 import logging
 import threading
 import asyncio
@@ -107,6 +108,19 @@ def run_health_check_server():
     port = int(os.getenv("PORT", 8080))
     server = HTTPServer(("0.0.0.0", port), HealthCheckHandler)
     server.serve_forever()
+
+def run_keep_alive_pinger():
+    """Hace ping cada 10 minutos a RENDER_EXTERNAL_URL para evitar que Render duerma el bot tras 15 min."""
+    time.sleep(30)
+    while True:
+        url = os.getenv("RENDER_EXTERNAL_URL") or os.getenv("KEEP_ALIVE_URL")
+        if url:
+            try:
+                requests.get(url, timeout=10)
+                logger.info(f"Keep-alive ping enviado a {url}")
+            except Exception as e:
+                logger.warning(f"Keep-alive ping fallo: {e}")
+        time.sleep(600)
 
 # ============================================================
 # BUSCADOR INTELIGENTE BM25 PARA GUÍAS Y COMPENDIO STEWART
@@ -220,6 +234,7 @@ class SmartDocumentIndex:
 
 SEARCH_ENGINE = SmartDocumentIndex(INDEX_FILE)
 threading.Thread(target=run_health_check_server, daemon=True).start()
+threading.Thread(target=run_keep_alive_pinger, daemon=True).start()
 
 # ============================================================
 # PROMPT SISTEMA: CÁLCULO INTEGRAL STEWART (FORMATO WATCH 4)
