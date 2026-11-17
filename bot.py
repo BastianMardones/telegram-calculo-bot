@@ -83,6 +83,11 @@ if GEMINI_API_KEY and genai is not None:
 # SERVIDOR WEB KEEP-ALIVE PARA RENDER (24/7 SIN PC)
 # ============================================================
 class HealthCheckHandler(BaseHTTPRequestHandler):
+    def do_HEAD(self):
+        self.send_response(200)
+        self.send_header("Content-Type", "text/plain; charset=utf-8")
+        self.end_headers()
+
     def do_GET(self):
         self.send_response(200)
         self.send_header("Content-Type", "text/plain; charset=utf-8")
