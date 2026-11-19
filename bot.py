@@ -244,37 +244,36 @@ threading.Thread(target=run_keep_alive_pinger, daemon=True).start()
 # ============================================================
 # PROMPT SISTEMA: CÁLCULO INTEGRAL STEWART (FORMATO WATCH 4)
 # ============================================================
-BASE_SYSTEM_INSTRUCTION = """Eres el Tutor Experto de 'Cálculo Integral' (basado en Cálculo de Una Variable de James Stewart y certámenes universitarios de Ingeniería UBB).
+BASE_SYSTEM_INSTRUCTION = """Eres el Tutor Experto de 'Cálculo Integral' (Código 242150, Semestre 2026-2) de la Universidad del Bío-Bío (UBB), cátedra del **Prof. Dr. Eligio Antonio Colmenares**.
+
+Tienes cargados e indexados los 4 documentos oficiales actuales del curso:
+1. **Guía de preparación para el Test - Unidad IV: Sucesiones y Series Infinitas** (`guia_preparacion_test_unidad_IV_series.pdf`): Mapa conceptual oficial y los 48 ejercicios (Secciones A hasta L: Sucesión, serie y sumas parciales sₙ, Criterio de divergencia, Series geométricas, Series p, ¿Con quién comparar?, Comparación directa, Comparación por el límite, Series alternantes de Leibniz, Convergencia absoluta vs condicional, Preguntas rápidas 25–40 y Deducción/errores frecuentes 41–48).
+2. **Listado de Cálculo Integral de la Unidad IV: Sucesiones y Series Infinitas 2026-2** (`ListadoUnidadI IV 2026.pdf`): Ejercicios 1 al 22 completos (Construcción de fórmula general aₙ, Convergencia de sucesiones por límites ∞/∞ y ∞-∞ con racionalización e identidad cúbica, Monotonía por diferencia/cociente/derivada, Sucesiones por recurrencia + Inducción + Teorema de Convergencia Monótona, Series geométricas, Telescópicas, Álgebra de series, Test de la integral, Comparación directa y por paso al límite, Leibniz, Convergencia absoluta, y Radio e Intervalo de convergencia de Series de Potencias).
+3. **Diapositivas oficiales de clases: Sucesiones y Series Infinitas 2026-2** (`SucesionesSeries2026.pdf`, 41 páginas del Prof. Eligio Colmenares).
+4. **Libro / Apuntes oficiales de clase de Cálculo Integral** (`calculo_integral (10).pdf`, 174 páginas del Prof. Eligio Antonio Colmenares).
 
 REGLAS ESTRICTAS DE FORMATO MATEMÁTICO PARA SAMSUNG GALAXY WATCH 4 (396x396 px):
-1. PROHIBIDO USAR LATEX CRUDO (PROHIBIDO \\int, \\frac, \\sqrt, \\left, \\right, $$):
+1. PROHIBIDO USAR LATEX CRUDO (PROHIBIDO \\int, \\frac, \\sqrt, \\sum, \\lim, \\left, \\right, $$):
    - En el reloj el código LaTeX NO se renderiza.
    - Escribe TODA expresión matemática exclusivamente con **Unicode matemático limpio**:
-     • Símbolo de integral: `∫` (ej: `∫₀^π`, `∫ (x² + 1) dx`)
-     • Raíces: `√(x² - 4)`, `³√(x)`
-     • Fracciones en una sola línea clara: `(x² + 1) / (x - 2)` o `½`, `⅓`, `¼`
-     • Potencias y subíndices Unicode: `x²`, `x³`, `x⁴`, `xⁿ`, `u₁`, `u₂`, `aₙ`
-     • Símbolos: `π`, `∞`, `θ`, `α`, `β`, `∑`, `lím_{x→∞}`, `≈`, `≤`, `≥`, `≠`, `⇒`, `→`
-     • Funciones en español: `sen(x)`, `cos(x)`, `tan(x)`, `sec(x)`, `ln|x|`, `arcsen(x)`, `arctan(x)`
+     • Series y sumas: `∑_{n=1}^∞ aₙ`, suma parcial `sₙ`
+     • Límites: `lím_{n→∞} aₙ = 0`
+     • Integrales y raíces: `∫`, `√(n² + 1)`, `³√(n³ + 3n)`
+     • Fracciones en una línea clara: `(2n + 1) / (3n + 4)`
+     • Potencias y subíndices Unicode: `x²`, `x³`, `xⁿ`, `aₙ`, `bₙ`, `sₙ`
+     • Símbolos: `π`, `∞`, `θ`, `≈`, `≤`, `≥`, `≠`, `⇒`, `→`
+     • Funciones en español: `sen(x)`, `cos(x)`, `tan(x)`, `ln(n)`, `arctan(n)`
 
 2. ESTRUCTURA OBLIGATORIA DE RESPUESTA (DISEÑADA PARA LEER EN LA MUÑECA):
-   - Cero saludos ni texto de relleno.
+   - Cero saludos ni introducciones largas.
    - Comienza SIEMPRE con este bloque de 2 líneas arriba del todo:
-     🎯 **Resultado:** `[Resultado final exacto + C o valor numérico]`
-     🔑 **Método:** `[Ej: Sustitución trigonométrica x = 2·sen(θ) / Partes ILATE / Casquillos]`
-   - Luego muestra **📝 Pasos cortos:** numerados (`Paso 1`, `Paso 2`, `Paso 3`...), donde cada línea matemática sea corta y vertical para no hacer scroll horizontal en la pantalla redonda del reloj.
+     🎯 **Conclusión / Resultado:** `[Ej: CONVERGE (Suma = 3/2) / DIVERGE / Verdadero / Límite = e²]`
+     🔑 **Criterio / Idea clave:** `[Ej: Criterio de Divergencia (lím aₙ = 2/3 ≠ 0) / Serie p (p = 2 > 1) / Comparación por límite con 1/n²]`
+   - Luego muestra **📝 Justificación paso a paso:** en líneas cortas y verticales para que no se corten en la pantalla redonda del reloj.
 
-3. RIGOR EN APLICACIONES Y ESTILO DEL CERTAMEN II UBB (PROF. DR. ELIGIO COLMENARES):
-   - Tienes cargada la Pauta Oficial del **Certamen II de Cálculo Integral (242150, Semestre 2026-2, Prof. Dr. Eligio Colmenares)**:
-     • **Parte I (Demostraciones y TFC):** Ecuaciones integrales derivando con TFC Parte 1 + regla del producto (`[x·f(x)]' = f(x) + x·f'(x)`) + integración por partes y cálculo de la constante con condición inicial `f(1)`; Desigualdad de Cauchy-Schwarz integral.
-     • **Parte II (Integrales Definidas):**
-       - En **cambio de variable**, si se pide transformar límites, cambia `x∈[a,b]` a `u∈[u(a),u(b)]` y evalúa directo en `u` sin volver a `x`.
-       - En **sustitución trigonométrica**, resuelve primero la antiderivada indefinida en `θ`, regresa a la variable original `x` mediante el triángulo rectángulo y luego evalúa con el TFC.
-     • **Parte III (Aplicaciones Geométricas - Áreas y Volúmenes):**
-       - Interpretación geométrica de la integral definida descomponiendo en áreas conocidas (semicírculo `x²+(y-b)²=r²` + rectángulos) sin calcular antiderivadas.
-       - Regiones Tipo I (vertical `dx`) y Tipo II (horizontal `dy`: `∫ [x_der(y) - x_izq(y)] dy`).
-       - Volúmenes de revolución por **Discos** (`V = π ∫ R²`), **Arandelas** (`V = π ∫ (R_ext² - r_int²)`) y **Casquillos** (`V = 2π ∫ r·h`), indicando siempre variable de integración, radio exterior e interior.
-
+3. RIGOR CONCEPTUAL DE LA CÁTEDRA (PROF. ELIGIO COLMENARES):
+   - Distingue siempre con precisión entre la **sucesión de términos `{aₙ}`**, la **sucesión de sumas parciales `{sₙ}`** y la **serie infinita `∑ aₙ`**.
+   - Recuerda siempre que `lím_{n→∞} aₙ = 0` es condición **necesaria pero NO suficiente** para que `∑ aₙ` converja (contraejemplo clave de la guía: la serie armónica `∑ 1/n` tiene `1/n → 0` pero diverge). En cambio, si `lím_{n→∞} sₙ = S`, entonces la serie **sí converge** y su suma vale `S`.
 """
 
 SUPERSCRIPTS = str.maketrans("0123456789+-=n", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼ⁿ")
@@ -374,12 +373,12 @@ def dividir_en_chunks_markdown(texto: str, max_len: int = 3600) -> list[str]:
 user_histories = {}
 
 def ask_deepseek(user_id: int, message_text: str, use_reasoner: bool = False) -> str:
-    relevant_docs = SEARCH_ENGINE.search(message_text, top_k=3)
+    relevant_docs = SEARCH_ENGINE.search(message_text, top_k=6)
     system_prompt = (
         f"{BASE_SYSTEM_INSTRUCTION}\n\n"
-        "=== REFERENCIA STEWART / GUÍAS CARGADAS ===\n"
+        "=== MATERIAL OFICIAL DEL PROF. ELIGIO COLMENARES RECUPERADO ===\n"
         f"{relevant_docs}\n"
-        "=== FIN DE REFERENCIA ==="
+        "=== FIN DE MATERIAL RECUPERADO ==="
     )
 
     if user_id not in user_histories:
@@ -438,13 +437,17 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     user_histories.pop(user_id, None)
     welcome = (
-        "∫ <b>Cálculo Integral Tutor (James Stewart + Watch 4)</b>\n\n"
-        "⚡ <b>Comandos diseñados para tu reloj:</b>\n"
-        "• <code>/c2</code> - Ver/practicar Pauta Certamen II 2026-2 (Prof. Eligio Colmenares)\n"
-        "• Escribe cualquier integral, área, volumen o demostración TFC\n"
-        "• <code>/r1 [ejercicio]</code> - Resolver con <b>DeepSeek-R1</b> (razonador matemático)\n"
-        "• <code>/formulario [tema]</code> - Ver fórmulas (partes, trig, volúmenes, series)\n"
-        "• <code>/practicar [tema]</code> - Ejercicio tipo Certamen II UBB\n"
+        "∑ <b>Cálculo Integral UBB (Prof. Eligio Colmenares + Watch 4)</b>\n\n"
+        "📚 <b>4 Documentos Oficiales Cargados:</b>\n"
+        "• <code>Guía Preparación Test Unidad IV (Series)</code> (Ej. 1–48)\n"
+        "• <code>Listado Unidad IV 2026 (Sucesiones y Series)</code> (Ej. 1–22)\n"
+        "• <code>SucesionesSeries2026.pdf</code> (41 diapositivas de clases)\n"
+        "• <code>calculo_integral (10).pdf</code> (174 págs. Apuntes oficiales)\n\n"
+        "⚡ <b>Comandos rápidos para tu reloj:</b>\n"
+        "• <code>/test [N°]</code> - Resolver ej. 1 al 48 de la Guía del Test de Series\n"
+        "• <code>/listado [N°]</code> - Resolver ej. 1 al 22 del Listado Unidad IV\n"
+        "• <code>/series</code> - Mapa conceptual y criterios de convergencia\n"
+        "• <code>/practicar [tema]</code> - Pregunta rápida tipo Test Unidad IV\n"
         "• <code>/nuevo</code> - Reiniciar conversación"
     )
     await update.message.reply_text(welcome, parse_mode=ParseMode.HTML)
@@ -452,23 +455,57 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def nuevo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     user_histories.pop(user_id, None)
-    await update.message.reply_text("🔄 Memoria reiniciada. Envíame tu integral o ejercicio.")
+    await update.message.reply_text("🔄 Memoria reiniciada. ¿Qué sucesión, serie o ejercicio vemos?")
 
-async def certamen2_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def test_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     num = " ".join(context.args) if context.args else ""
     if num:
         prompt = (
-            f"Muéstrame el enunciado y la solución oficial paso a paso en formato compacto para mi Galaxy Watch 4 "
-            f"del Problema '{num}' del Certamen II 2026-2 del Prof. Dr. Eligio Colmenares."
+            f"Muéstrame el enunciado y la solución justificada paso a paso en formato compacto para mi Galaxy Watch 4 "
+            f"del ejercicio '{num}' de la Guía de preparación para el test de la Unidad IV (Sucesiones y Series Infinitas)."
         )
     else:
         prompt = (
-            "Haz un resumen compacto para mi Galaxy Watch 4 con los 7 problemas que entraron en el "
-            "Certamen II de Cálculo Integral 2026-2 del Prof. Dr. Eligio Colmenares (Parte I: TFC y Cauchy-Schwarz, "
-            "Parte II: las 5 integrales definidas, Parte III: área geométrica, región Tipo II y volúmenes de revolución) "
-            "y dime que puedo escribir /c2 [número de problema] para ver su solución paso a paso o practicar uno similar."
+            "Haz un resumen ultra compacto para mi Galaxy Watch 4 de las secciones A hasta L (ejercicios 1 al 48) "
+            "de la Guía de preparación para el test de la Unidad IV (Series Infinitas) del Prof. Eligio Colmenares, "
+            "y dime que puedo escribir /test [número] (ej: /test 1, /test 15, /test 48) para ver cualquier ejercicio resuelto."
         )
+    await update.effective_chat.send_action(ChatAction.TYPING)
+    try:
+        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, False)
+        await split_and_send(update, reply)
+    except Exception as e:
+        await update.message.reply_text(f"❌ {e}")
+
+async def listado_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
+    num = " ".join(context.args) if context.args else ""
+    if num:
+        prompt = (
+            f"Muéstrame el enunciado y la resolución completa paso a paso en formato compacto para mi Galaxy Watch 4 "
+            f"del ejercicio '{num}' del Listado de Cálculo Integral de la Unidad IV (Sucesiones y Series Infinitas 2026-2)."
+        )
+    else:
+        prompt = (
+            "Haz un resumen compacto para mi Galaxy Watch 4 de los 22 ejercicios del Listado de la Unidad IV "
+            "(Sucesiones: ejercicios 1 al 13; Series Infinitas y de Potencias: ejercicios 12 al 22) del Prof. Eligio Colmenares, "
+            "y dime que puedo escribir /listado [número] (ej: /listado 5, /listado 14, /listado 22) para resolver cualquiera."
+        )
+    await update.effective_chat.send_action(ChatAction.TYPING)
+    try:
+        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, False)
+        await split_and_send(update, reply)
+    except Exception as e:
+        await update.message.reply_text(f"❌ {e}")
+
+async def series_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
+    prompt = (
+        "Muéstrame el Mapa Conceptual Oficial de Series Infinitas de la Unidad IV del Prof. Eligio Colmenares "
+        "en formato vertical ultra compacto para mi Galaxy Watch 4 (Convergencia por sₙ, Criterio de divergencia, "
+        "Geométricas, Series p, Telescópicas, Comparación directa, Comparación por límite, Leibniz y Convergencia absoluta)."
+    )
     await update.effective_chat.send_action(ChatAction.TYPING)
     try:
         reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, False)
@@ -591,8 +628,10 @@ def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("ayuda", start))
     app.add_handler(CommandHandler("nuevo", nuevo))
-    app.add_handler(CommandHandler("c2", certamen2_cmd))
-    app.add_handler(CommandHandler("certamen2", certamen2_cmd))
+    app.add_handler(CommandHandler("test", test_cmd))
+    app.add_handler(CommandHandler("listado", listado_cmd))
+    app.add_handler(CommandHandler("series", series_cmd))
+    app.add_handler(CommandHandler("c2", test_cmd))
     app.add_handler(CommandHandler("formulario", formulario_cmd))
     app.add_handler(CommandHandler("practicar", practicar_cmd))
     app.add_handler(CommandHandler("r1", r1_cmd))
