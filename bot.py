@@ -246,11 +246,17 @@ threading.Thread(target=run_keep_alive_pinger, daemon=True).start()
 # ============================================================
 BASE_SYSTEM_INSTRUCTION = """Eres el Tutor Experto de 'Cálculo Integral' (Código 242150, Semestre 2026-2) de la Universidad del Bío-Bío (UBB), cátedra del **Prof. Dr. Eligio Antonio Colmenares**.
 
-Tienes cargados e indexados los 4 documentos oficiales actuales del curso:
-1. **Guía de preparación para el Test - Unidad IV: Sucesiones y Series Infinitas** (`guia_preparacion_test_unidad_IV_series.pdf`): Mapa conceptual oficial y los 48 ejercicios (Secciones A hasta L: Sucesión, serie y sumas parciales sₙ, Criterio de divergencia, Series geométricas, Series p, ¿Con quién comparar?, Comparación directa, Comparación por el límite, Series alternantes de Leibniz, Convergencia absoluta vs condicional, Preguntas rápidas 25–40 y Deducción/errores frecuentes 41–48).
-2. **Listado de Cálculo Integral de la Unidad IV: Sucesiones y Series Infinitas 2026-2** (`ListadoUnidadI IV 2026.pdf`): Ejercicios 1 al 22 completos (Construcción de fórmula general aₙ, Convergencia de sucesiones por límites ∞/∞ y ∞-∞ con racionalización e identidad cúbica, Monotonía por diferencia/cociente/derivada, Sucesiones por recurrencia + Inducción + Teorema de Convergencia Monótona, Series geométricas, Telescópicas, Álgebra de series, Test de la integral, Comparación directa y por paso al límite, Leibniz, Convergencia absoluta, y Radio e Intervalo de convergencia de Series de Potencias).
-3. **Diapositivas oficiales de clases: Sucesiones y Series Infinitas 2026-2** (`SucesionesSeries2026.pdf`, 41 páginas del Prof. Eligio Colmenares).
-4. **Libro / Apuntes oficiales de clase de Cálculo Integral** (`calculo_integral (10).pdf`, 174 páginas del Prof. Eligio Antonio Colmenares).
+Tienes cargados e indexados los 5 documentos oficiales actuales del curso:
+1. **Evaluación Integradora de Cálculo Integral (242150 - Semestre I-2024 - Prof. Eligio Colmenares, Prioridad Máxima):** Los 5 problemas completos con su solucionario verificado paso a paso:
+   • Problema 1: 6 integrales (sustitución con raíz + división polinómica; completación de cuadrados con integral impropia Tipo 2 escondida en el extremo; integración por partes doble; integral impropia doble en 0⁺ y +∞; sustitución + trigonométrica; fracciones parciales con factor repetido y cuadrático irreducible).
+   • Problema 2: (a) Plantear área entre curvas que se cruzan dentro del intervalo (partir integral en el punto de intersección); (b) Plantear volumen por **secciones transversales conocidas** (cuadrados perpendiculares al eje x, partiendo en la intersección de las parábolas).
+   • Problema 3: Sucesión recurrente (`a₁ = 1, aₙ₊₁ = ½(aₙ + 2/aₙ)`): probar cota cuadrática `aₙ² ≥ 2`, monotonía por diferencia, acotamiento inferior por inducción, convergencia monótona y límite `√2`.
+   • Problema 4: Series numéricas con el criterio específico solicitado (Comparación por paso al límite, Criterio de la Razón con `(1 + 1/n)ⁿ → e`, y Criterio de la Raíz).
+   • Problema 5: Radio e Intervalo de convergencia de Serie de Potencias analizando ambos extremos por separado.
+2. **Guía de preparación para el Test - Unidad IV: Sucesiones y Series Infinitas** (`guia_preparacion_test_unidad_IV_series.pdf`): Mapa conceptual oficial y los 48 ejercicios (Secciones A hasta L).
+3. **Listado de Cálculo Integral de la Unidad IV: Sucesiones y Series Infinitas 2026-2** (`ListadoUnidadI IV 2026.pdf`): Ejercicios 1 al 22 completos.
+4. **Diapositivas oficiales de clases: Sucesiones y Series Infinitas 2026-2** (`SucesionesSeries2026.pdf`, 41 páginas).
+5. **Libro / Apuntes oficiales de clase de Cálculo Integral** (`calculo_integral (10).pdf`, 174 páginas del Prof. Eligio Antonio Colmenares).
 
 REGLAS ESTRICTAS DE FORMATO MATEMÁTICO PARA SAMSUNG GALAXY WATCH 4 (396x396 px):
 1. PROHIBIDO USAR LATEX CRUDO (PROHIBIDO \\int, \\frac, \\sqrt, \\sum, \\lim, \\left, \\right, $$):
@@ -271,9 +277,11 @@ REGLAS ESTRICTAS DE FORMATO MATEMÁTICO PARA SAMSUNG GALAXY WATCH 4 (396x396 px)
      🔑 **Criterio / Idea clave:** `[Ej: Criterio de Divergencia (lím aₙ = 2/3 ≠ 0) / Serie p (p = 2 > 1) / Comparación por límite con 1/n²]`
    - Luego muestra **📝 Justificación paso a paso:** en líneas cortas y verticales para que no se corten en la pantalla redonda del reloj.
 
-3. RIGOR CONCEPTUAL DE LA CÁTEDRA (PROF. ELIGIO COLMENARES):
-   - Distingue siempre con precisión entre la **sucesión de términos `{aₙ}`**, la **sucesión de sumas parciales `{sₙ}`** y la **serie infinita `∑ aₙ`**.
-   - Recuerda siempre que `lím_{n→∞} aₙ = 0` es condición **necesaria pero NO suficiente** para que `∑ aₙ` converja (contraejemplo clave de la guía: la serie armónica `∑ 1/n` tiene `1/n → 0` pero diverge). En cambio, si `lím_{n→∞} sₙ = S`, entonces la serie **sí converge** y su suma vale `S`.
+3. RIGOR CONCEPTUAL DE LA CÁTEDRA Y EVALUACIÓN INTEGRADORA (PROF. ELIGIO COLMENARES):
+   - **Integrales impropias escondidas:** Revisa SIEMPRE si el denominador se anula en algún extremo o punto interior (como `∫₂⁵ dx / √(5 + 4x - x²)` en `x = 5` o `∫₀^∞ e^(-√x)/√x dx` en `0⁺` y `+∞`) y resuélvelas formalmente con límites laterales (`lím_{b→5⁻}`).
+   - **Áreas y Volúmenes por Secciones Transversales:** Verifica SIEMPRE si las curvas se cruzan dentro del intervalo de integración (si se cruzan, parte la integral en el cruce). En sólidos con secciones transversales perpendiculares al eje `x` (cuadrados, semicírculos, triángulos), integra respecto a `x` usando `V = ∫ A(x) dx` y separa la integral si cambia la curva frontera.
+   - **Sucesiones recurrentes:** Demuestra cotas, monotonía (`aₙ₊₁ - aₙ`), acotamiento por inducción, invoca explícitamente el **Teorema de la Convergencia Monótona** y luego pasa al límite en la recurrencia descartando raíces fuera del rango.
+   - **Series y Series de Potencias:** Distingue con precisión entre `{aₙ}`, `{sₙ}` y `∑ aₙ` (`lím aₙ = 0` es necesaria pero NO suficiente). Al hallar el intervalo de convergencia de una serie de potencias, analiza SIEMPRE los dos extremos por separado.
 """
 
 SUPERSCRIPTS = str.maketrans("0123456789+-=n", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼ⁿ")
@@ -438,16 +446,17 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_histories.pop(user_id, None)
     welcome = (
         "∑ <b>Cálculo Integral UBB (Prof. Eligio Colmenares + Watch 4)</b>\n\n"
-        "📚 <b>4 Documentos Oficiales Cargados:</b>\n"
+        "📚 <b>5 Documentos Oficiales Cargados:</b>\n"
+        "• <code>Evaluación Integradora (I-2024)</code> (Integrales, Áreas, Secciones, Recurrencia, Series)\n"
         "• <code>Guía Preparación Test Unidad IV (Series)</code> (Ej. 1–48)\n"
         "• <code>Listado Unidad IV 2026 (Sucesiones y Series)</code> (Ej. 1–22)\n"
-        "• <code>SucesionesSeries2026.pdf</code> (41 diapositivas de clases)\n"
-        "• <code>calculo_integral (10).pdf</code> (174 págs. Apuntes oficiales)\n\n"
+        "• <code>SucesionesSeries2026.pdf</code> (41 slides) + <code>Apuntes (174 págs)</code>\n\n"
         "⚡ <b>Comandos rápidos para tu reloj:</b>\n"
+        "• <code>/integradora [N°]</code> - Resolver/practicar Evaluación Integradora (ej: <code>/integradora 1f</code>, <code>/integradora 2b</code>, <code>/integradora 5</code>)\n"
         "• <code>/test [N°]</code> - Resolver ej. 1 al 48 de la Guía del Test de Series\n"
         "• <code>/listado [N°]</code> - Resolver ej. 1 al 22 del Listado Unidad IV\n"
         "• <code>/series</code> - Mapa conceptual y criterios de convergencia\n"
-        "• <code>/practicar [tema]</code> - Pregunta rápida tipo Test Unidad IV\n"
+        "• <code>/practicar [tema]</code> - Pregunta tipo Evaluación Integradora / Test\n"
         "• <code>/nuevo</code> - Reiniciar conversación"
     )
     await update.message.reply_text(welcome, parse_mode=ParseMode.HTML)
@@ -456,6 +465,28 @@ async def nuevo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     user_histories.pop(user_id, None)
     await update.message.reply_text("🔄 Memoria reiniciada. ¿Qué sucesión, serie o ejercicio vemos?")
+
+async def integradora_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
+    num = " ".join(context.args) if context.args else ""
+    if num:
+        prompt = (
+            f"Muéstrame el enunciado y la solución completa paso a paso en formato compacto para mi Galaxy Watch 4 "
+            f"del Problema '{num}' de la Evaluación Integradora de Cálculo Integral (242150 - Prof. Eligio Colmenares)."
+        )
+    else:
+        prompt = (
+            "Haz un resumen compacto para mi Galaxy Watch 4 con los 5 problemas de la Evaluación Integradora de Cálculo Integral (Prof. Eligio Colmenares): "
+            "1. Las 6 integrales (1a–1f, incluyendo impropias y fracciones parciales), 2. Área con cruce y Volumen por secciones transversales cuadradas, "
+            "3. Sucesión recurrente aₙ₊₁=½(aₙ+2/aₙ), 4. Series por Comparación límite, Razón y Raíz, y 5. Radio e intervalo de convergencia, "
+            "y dime que puedo escribir /integradora [1a..5] o /practicar integradora."
+        )
+    await update.effective_chat.send_action(ChatAction.TYPING)
+    try:
+        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, False)
+        await split_and_send(update, reply)
+    except Exception as e:
+        await update.message.reply_text(f"❌ {e}")
 
 async def test_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
@@ -528,10 +559,10 @@ async def formulario_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def practicar_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
-    tema = " ".join(context.args) if context.args else "integración o volúmenes de sólidos de revolución"
+    tema = " ".join(context.args) if context.args else "Evaluación Integradora (técnicas de integración, impropias, áreas/secciones transversales, sucesiones recurrentes o series)"
     prompt = (
-        f"Propón un ejercicio nivel certamen universitario (estilo James Stewart) sobre: '{tema}'. "
-        "Escríbelo en Unicode limpio y espera a que te diga cómo lo plantearía."
+        f"Propón un ejercicio estilo Evaluación Integradora del Prof. Eligio Colmenares (UBB) sobre: '{tema}'. "
+        "Escríbelo en Unicode limpio para mi Galaxy Watch 4 y espera a que te diga cómo lo resolvería."
     )
     await update.effective_chat.send_action(ChatAction.TYPING)
     try:
@@ -628,6 +659,8 @@ def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("ayuda", start))
     app.add_handler(CommandHandler("nuevo", nuevo))
+    app.add_handler(CommandHandler("integradora", integradora_cmd))
+    app.add_handler(CommandHandler("int", integradora_cmd))
     app.add_handler(CommandHandler("test", test_cmd))
     app.add_handler(CommandHandler("listado", listado_cmd))
     app.add_handler(CommandHandler("series", series_cmd))
