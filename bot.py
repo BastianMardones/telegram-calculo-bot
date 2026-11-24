@@ -246,8 +246,15 @@ threading.Thread(target=run_keep_alive_pinger, daemon=True).start()
 # ============================================================
 BASE_SYSTEM_INSTRUCTION = """Eres el Tutor Experto de 'Cálculo Integral' (Código 242150, Semestre 2026-2) de la Universidad del Bío-Bío (UBB), cátedra del **Prof. Dr. Eligio Antonio Colmenares**.
 
-Tienes cargados e indexados los 5 documentos oficiales actuales del curso:
-1. **Evaluación Integradora de Cálculo Integral (242150 - Semestre I-2024 - Prof. Eligio Colmenares, Prioridad Máxima):** Los 5 problemas completos con su solucionario verificado paso a paso:
+Tienes cargados e indexados los 6 documentos oficiales actuales del curso:
+1. **Certamen 3 – Series Infinitas (242150 - Semestre 2025-2 - Prof. Eligio Colmenares, Prioridad Máxima):** Los 6 problemas completos con su solucionario paso a paso:
+   • Problema 1: 3 series numéricas (geométrica divergente `r=4/3`, criterio de divergencia `lím=1/4`, y álgebra de series geométrica `3/eⁿ` menos telescópica `2/(5n(n+1))`).
+   • Problema 2: Serie telescópica `∑ 3/(n(n+3))` expresando `{sₙ}` explícitamente hasta llegar a suma `11/6`.
+   • Problema 3: Comparación por paso al límite para `∑ (2n²+3n)/√(5+n⁵)` comparando con `1/√n` (`L=2`, diverge).
+   • Problema 4: 3 series de potencias indicando centro `a`, radio `R` e intervalo `I` con análisis de extremos.
+   • Problema 5: Demostración de la suma geométrica `∑ xⁿ = 1/(1-x)` en `(-1,1)` y deducción por integración término a término de `tan⁻¹(x) = ∑ (-1)ⁿ x^(2n+1)/(2n+1)`.
+   • Problema 6: Serie de Taylor (Maclaurin) de `f(x) = cos(x)` en `a = 0` por definición de derivadas + `R = +∞, I = ℝ`.
+2. **Evaluación Integradora de Cálculo Integral (242150 - Semestre I-2024 - Prof. Eligio Colmenares, Prioridad Máxima):** Los 5 problemas completos con su solucionario verificado paso a paso:
    • Problema 1: 6 integrales (sustitución con raíz + división polinómica; completación de cuadrados con integral impropia Tipo 2 escondida en el extremo; integración por partes doble; integral impropia doble en 0⁺ y +∞; sustitución + trigonométrica; fracciones parciales con factor repetido y cuadrático irreducible).
    • Problema 2: (a) Plantear área entre curvas que se cruzan dentro del intervalo (partir integral en el punto de intersección); (b) Plantear volumen por **secciones transversales conocidas** (cuadrados perpendiculares al eje x, partiendo en la intersección de las parábolas).
    • Problema 3: Sucesión recurrente (`a₁ = 1, aₙ₊₁ = ½(aₙ + 2/aₙ)`): probar cota cuadrática `aₙ² ≥ 2`, monotonía por diferencia, acotamiento inferior por inducción, convergencia monótona y límite `√2`.
@@ -446,17 +453,19 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_histories.pop(user_id, None)
     welcome = (
         "∑ <b>Cálculo Integral UBB (Prof. Eligio Colmenares + Watch 4)</b>\n\n"
-        "📚 <b>5 Documentos Oficiales Cargados:</b>\n"
+        "📚 <b>6 Documentos Oficiales Cargados:</b>\n"
+        "• <code>Certamen 3 – Series Infinitas (2025-2)</code> (Series, Telescópica, Potencias, arctan, Taylor cos)\n"
         "• <code>Evaluación Integradora (I-2024)</code> (Integrales, Áreas, Secciones, Recurrencia, Series)\n"
         "• <code>Guía Preparación Test Unidad IV (Series)</code> (Ej. 1–48)\n"
         "• <code>Listado Unidad IV 2026 (Sucesiones y Series)</code> (Ej. 1–22)\n"
         "• <code>SucesionesSeries2026.pdf</code> (41 slides) + <code>Apuntes (174 págs)</code>\n\n"
         "⚡ <b>Comandos rápidos para tu reloj:</b>\n"
-        "• <code>/integradora [N°]</code> - Resolver/practicar Evaluación Integradora (ej: <code>/integradora 1f</code>, <code>/integradora 2b</code>, <code>/integradora 5</code>)\n"
+        "• <code>/c3 [N°]</code> - Resolver/practicar Certamen 3 Series Infinitas (ej: <code>/c3 2</code>, <code>/c3 4c</code>, <code>/c3 5</code>, <code>/c3 6</code>)\n"
+        "• <code>/integradora [N°]</code> - Resolver/practicar Evaluación Integradora (ej: <code>/integradora 1f</code>, <code>/integradora 2b</code>)\n"
         "• <code>/test [N°]</code> - Resolver ej. 1 al 48 de la Guía del Test de Series\n"
         "• <code>/listado [N°]</code> - Resolver ej. 1 al 22 del Listado Unidad IV\n"
         "• <code>/series</code> - Mapa conceptual y criterios de convergencia\n"
-        "• <code>/practicar [tema]</code> - Pregunta tipo Evaluación Integradora / Test\n"
+        "• <code>/practicar [tema]</code> - Pregunta tipo Certamen 3 / Integradora\n"
         "• <code>/nuevo</code> - Reiniciar conversación"
     )
     await update.message.reply_text(welcome, parse_mode=ParseMode.HTML)
@@ -465,6 +474,29 @@ async def nuevo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     user_histories.pop(user_id, None)
     await update.message.reply_text("🔄 Memoria reiniciada. ¿Qué sucesión, serie o ejercicio vemos?")
+
+async def c3_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
+    num = " ".join(context.args) if context.args else ""
+    if num:
+        prompt = (
+            f"Muéstrame el enunciado y la solución completa paso a paso en formato compacto para mi Galaxy Watch 4 "
+            f"del Problema '{num}' del Certamen 3 – Series Infinitas (Semestre 2025-2 - Prof. Eligio Colmenares)."
+        )
+    else:
+        prompt = (
+            "Haz un resumen compacto para mi Galaxy Watch 4 con los 6 problemas del Certamen 3 – Series Infinitas (2025-2, Prof. Eligio Colmenares): "
+            "1. 3 series numéricas (geométrica, divergencia, álgebra de series), 2. Telescópica 3/(n(n+3)) por {sₙ}, "
+            "3. Comparación en el límite con 1/√n, 4. 3 series de potencias (centro, radio e intervalo), "
+            "5. Demostración de 1/(1-x) y tan⁻¹(x), 6. Serie de Taylor de cos(x) en a=0 + R e I, "
+            "y dime que puedo escribir /c3 [1a..6] para ver cualquier solución paso a paso."
+        )
+    await update.effective_chat.send_action(ChatAction.TYPING)
+    try:
+        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, False)
+        await split_and_send(update, reply)
+    except Exception as e:
+        await update.message.reply_text(f"❌ {e}")
 
 async def integradora_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
@@ -659,6 +691,8 @@ def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("ayuda", start))
     app.add_handler(CommandHandler("nuevo", nuevo))
+    app.add_handler(CommandHandler("c3", c3_cmd))
+    app.add_handler(CommandHandler("certamen3", c3_cmd))
     app.add_handler(CommandHandler("integradora", integradora_cmd))
     app.add_handler(CommandHandler("int", integradora_cmd))
     app.add_handler(CommandHandler("test", test_cmd))
