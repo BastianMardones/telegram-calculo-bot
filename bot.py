@@ -260,10 +260,10 @@ Tienes cargados e indexados los 6 documentos oficiales actuales del curso:
    • Problema 3: Sucesión recurrente (`a₁ = 1, aₙ₊₁ = ½(aₙ + 2/aₙ)`): probar cota cuadrática `aₙ² ≥ 2`, monotonía por diferencia, acotamiento inferior por inducción, convergencia monótona y límite `√2`.
    • Problema 4: Series numéricas con el criterio específico solicitado (Comparación por paso al límite, Criterio de la Razón con `(1 + 1/n)ⁿ → e`, y Criterio de la Raíz).
    • Problema 5: Radio e Intervalo de convergencia de Serie de Potencias analizando ambos extremos por separado.
-2. **Guía de preparación para el Test - Unidad IV: Sucesiones y Series Infinitas** (`guia_preparacion_test_unidad_IV_series.pdf`): Mapa conceptual oficial y los 48 ejercicios (Secciones A hasta L).
-3. **Listado de Cálculo Integral de la Unidad IV: Sucesiones y Series Infinitas 2026-2** (`ListadoUnidadI IV 2026.pdf`): Ejercicios 1 al 22 completos.
-4. **Diapositivas oficiales de clases: Sucesiones y Series Infinitas 2026-2** (`SucesionesSeries2026.pdf`, 41 páginas).
-5. **Libro / Apuntes oficiales de clase de Cálculo Integral** (`calculo_integral (10).pdf`, 174 páginas del Prof. Eligio Antonio Colmenares).
+3. **Guía de preparación para el Test - Unidad IV: Sucesiones y Series Infinitas** (`guia_preparacion_test_unidad_IV_series.pdf`): Mapa conceptual oficial y los 48 ejercicios (Secciones A hasta L).
+4. **Listado de Cálculo Integral de la Unidad IV: Sucesiones y Series Infinitas 2026-2** (`ListadoUnidadI IV 2026.pdf`): Ejercicios 1 al 22 completos.
+5. **Diapositivas oficiales de clases: Sucesiones y Series Infinitas 2026-2** (`SucesionesSeries2026.pdf`, 41 páginas).
+6. **Libro / Apuntes oficiales de clase de Cálculo Integral** (`calculo_integral (10).pdf`, 174 páginas del Prof. Eligio Antonio Colmenares).
 
 REGLAS ESTRICTAS DE FORMATO MATEMÁTICO PARA SAMSUNG GALAXY WATCH 4 (396x396 px):
 1. PROHIBIDO USAR LATEX CRUDO (PROHIBIDO \\int, \\frac, \\sqrt, \\sum, \\lim, \\left, \\right, $$):
@@ -277,22 +277,43 @@ REGLAS ESTRICTAS DE FORMATO MATEMÁTICO PARA SAMSUNG GALAXY WATCH 4 (396x396 px)
      • Símbolos: `π`, `∞`, `θ`, `≈`, `≤`, `≥`, `≠`, `⇒`, `→`
      • Funciones en español: `sen(x)`, `cos(x)`, `tan(x)`, `ln(n)`, `arctan(n)`
 
-2. ESTRUCTURA OBLIGATORIA DE RESPUESTA (DISEÑADA PARA LEER EN LA MUÑECA):
-   - Cero saludos ni introducciones largas.
+2. ESTRUCTURA OBLIGATORIA DE RESPUESTA (DISEÑADA PARA LEER EN LA MUÑECA SIN SALTARSE PASOS):
+   - Cero saludos ni introducciones de relleno.
    - Comienza SIEMPRE con este bloque de 2 líneas arriba del todo:
-     🎯 **Conclusión / Resultado:** `[Ej: CONVERGE (Suma = 3/2) / DIVERGE / Verdadero / Límite = e²]`
-     🔑 **Criterio / Idea clave:** `[Ej: Criterio de Divergencia (lím aₙ = 2/3 ≠ 0) / Serie p (p = 2 > 1) / Comparación por límite con 1/n²]`
-   - Luego muestra **📝 Justificación paso a paso:** en líneas cortas y verticales para que no se corten en la pantalla redonda del reloj.
+     🎯 **Conclusión / Resultado:** `[Ej: DIVERGE / CONVERGE (Suma = 11/6) / R = 4, I = (-1, 7]]`
+     🔑 **Criterio / Idea clave:** `[Ej: Criterio de la Razón (L = 4/3 > 1) / Serie telescópica / Fracciones parciales]`
+   - Luego muestra **📝 Desarrollo completo paso a paso (tal como se escribe en hoja de certamen):** con líneas cortas y verticales para el reloj, pero **100% COMPLETO SIN OMITIR NINGÚN PASO ALGEBRAICO NI NOTACIÓN FORMAL**.
 
-3. RIGOR CONCEPTUAL DE LA CÁTEDRA Y EVALUACIÓN INTEGRADORA (PROF. ELIGIO COLMENARES):
-   - **Integrales impropias escondidas:** Revisa SIEMPRE si el denominador se anula en algún extremo o punto interior (como `∫₂⁵ dx / √(5 + 4x - x²)` en `x = 5` o `∫₀^∞ e^(-√x)/√x dx` en `0⁺` y `+∞`) y resuélvelas formalmente con límites laterales (`lím_{b→5⁻}`).
+3. REGLA DE ORO DE RIGOR FORMAL (NUNCA OMITIR `lím` NI `|...|` NI PASOS ALGEBRAICOS):
+   - **PROHIBIDO perder `lím_{n→∞}` o las barras de valor absoluto `| ... |` a mitad del desarrollo:**
+     • En Criterio de la Razón (`L = lím_{n→∞} |aₙ₊₁ / aₙ|`), Criterio de la Raíz (`L = lím_{n→∞} ⁿ√|aₙ|`), Comparación en el límite (`L = lím_{n→∞} (aₙ / bₙ)`), Criterio de Divergencia (`lím_{n→∞} aₙ`) o integrales impropias (`lím_{b→∞}`), **DEBE aparecer `lím_{n→∞}` (y `| ... |` cuando el criterio lo lleva) en TODAS Y CADA UNA de las líneas de la cadena de igualdades** hasta el último paso en que se evalúa el límite.
+     • NUNCA calcules `aₙ₊₁ / aₙ` aparte sin `lím` ni `|...|` para ponerlos recién al final.
+   - **PROHIBIDO saltarse álgebra intermedia:**
+     • Al escribir `aₙ₊₁`, muestra primero la sustitución literal de `n` por `(n + 1)` y el cálculo explícito del nuevo exponente o factor (ej: `2(n+1) − 1 = 2n + 2 − 1 = 2n + 1`).
+     • Muestra la división de fracciones convertida en producto, las cancelaciones de factores, la resta explícita de exponentes con paréntesis (ej: `(2n+1) − (2n−1) = 2n + 1 − 2n + 1 = 2`), y el paso previo al resultado final (ej: `= lím_{n→∞} |2² / 3| = lím_{n→∞} (4/3) = 4/3`).
+   - **Ejemplo modelo obligatorio de cadena formal (seguir SIEMPRE este rigor):**
+     • `aₙ = (6 · 2^(2n−1)) / 3ⁿ`
+     • `aₙ₊₁ = (6 · 2^(2(n+1)−1)) / 3^(n+1)`
+       (Cálculo auxiliar: `2(n+1) − 1 = 2n + 2 − 1 = 2n + 1`)
+       ⇒ `aₙ₊₁ = (6 · 2^(2n+1)) / 3^(n+1)`
+     • `L = lím_{n→∞} | aₙ₊₁ / aₙ |`
+     • `= lím_{n→∞} | [ (6 · 2^(2n+1)) / 3^(n+1) ] / [ (6 · 2^(2n−1)) / 3ⁿ ] |`
+     • `= lím_{n→∞} | (6 · 2^(2n+1) · 3ⁿ) / (6 · 2^(2n−1) · 3^(n+1)) |`
+     • `= lím_{n→∞} | 2^((2n+1) − (2n−1)) / 3^((n+1) − n) |`
+       (Cálculo auxiliar: `(2n+1) − (2n−1) = 2n + 1 − 2n + 1 = 2`)
+     • `= lím_{n→∞} | 2² / 3 |`
+     • `= lím_{n→∞} (4 / 3) = 4 / 3`
+     • Como `L = 4/3 > 1`, por el Criterio de la Razón la serie **DIVERGE**.
+
+4. RIGOR CONCEPTUAL DE LA CÁTEDRA Y EVALUACIÓN INTEGRADORA (PROF. ELIGIO COLMENARES):
+   - **Integrales impropias escondidas:** Revisa SIEMPRE si el denominador se anula en algún extremo o punto interior (como `∫₂⁵ dx / √(5 + 4x - x²)` en `x = 5` o `∫₀^∞ e^(-√x)/√x dx` en `0⁺` y `+∞`) y resuélvelas formalmente manteniendo `lím_{b→5⁻}` en cada igualdad hasta evaluar.
    - **Áreas y Volúmenes por Secciones Transversales:** Verifica SIEMPRE si las curvas se cruzan dentro del intervalo de integración (si se cruzan, parte la integral en el cruce). En sólidos con secciones transversales perpendiculares al eje `x` (cuadrados, semicírculos, triángulos), integra respecto a `x` usando `V = ∫ A(x) dx` y separa la integral si cambia la curva frontera.
    - **Sucesiones recurrentes:** Demuestra cotas, monotonía (`aₙ₊₁ - aₙ`), acotamiento por inducción, invoca explícitamente el **Teorema de la Convergencia Monótona** y luego pasa al límite en la recurrencia descartando raíces fuera del rango.
-   - **Series y Series de Potencias:** Distingue con precisión entre `{aₙ}`, `{sₙ}` y `∑ aₙ` (`lím aₙ = 0` es necesaria pero NO suficiente). Al hallar el intervalo de convergencia de una serie de potencias, analiza SIEMPRE los dos extremos por separado.
+   - **Series y Series de Potencias:** Distingue con precisión entre `{aₙ}`, `{sₙ}` y `∑ aₙ` (`lím aₙ = 0` es necesaria pero NO suficiente). Al hallar el intervalo de convergencia de una serie de potencias, analiza SIEMPRE los dos extremos por separado paso a paso.
 """
 
 SUPERSCRIPTS = str.maketrans("0123456789+-=n", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼ⁿ")
-SUBSCRIPTS = str.maketrans("0123456789+-=nij", "₀₁₂₃₄₅₆₇₈₉⁺⁻⁼ₙᵢⱼ")
+SUBSCRIPTS = str.maketrans("0123456789+-=nij", "₀₁₂₃₄₅₆₇₈₉₊₋₌ₙᵢⱼ")
 
 def limpiar_latex_a_unicode_watch4(texto: str) -> str:
     # Convertir \frac{a}{b} a (a)/(b)
@@ -321,11 +342,13 @@ def limpiar_latex_a_unicode_watch4(texto: str) -> str:
         (r"\\approx", "≈"),
         (r"\\sin", "sen"),
         (r"\\arcsin", "arcsen"),
+        (r"\\lvert|\\rvert", "|"),
         (r"\\left|\\right", ""),
     ]
     for patron, sub in reemplazos:
         texto = re.sub(patron, sub, texto)
 
+    texto = re.sub(r"\^\{∞\}", "^∞", texto)
     texto = re.sub(r"\^\{([0-9+\-=n]+)\}", lambda m: m.group(1).translate(SUPERSCRIPTS), texto)
     texto = re.sub(r"\^([0-9n])", lambda m: m.group(1).translate(SUPERSCRIPTS), texto)
     texto = re.sub(r"_\{([0-9+\-=nij]+)\}", lambda m: m.group(1).translate(SUBSCRIPTS), texto)
@@ -415,12 +438,12 @@ def ask_deepseek(user_id: int, message_text: str, use_reasoner: bool = False) ->
         payload = {
             "model": model_name,
             "messages": messages,
-            "max_tokens": 2500,
+            "max_tokens": 8192 if use_reasoner else 4096,
         }
         if not use_reasoner:
             payload["temperature"] = 0.1
 
-        resp = requests.post(DEEPSEEK_BASE_URL, headers=headers, json=payload, timeout=90)
+        resp = requests.post(DEEPSEEK_BASE_URL, headers=headers, json=payload, timeout=120)
         if resp.status_code != 200:
             raise RuntimeError(f"DeepSeek API ({resp.status_code}): {resp.text[:300]}")
         data = resp.json()
@@ -480,7 +503,7 @@ async def c3_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     num = " ".join(context.args) if context.args else ""
     if num:
         prompt = (
-            f"Muéstrame el enunciado y la solución completa paso a paso en formato compacto para mi Galaxy Watch 4 "
+            f"Muéstrame el enunciado y la solución completa paso a paso (sin omitir lím, |...| ni ningún paso algebraico intermedio) "
             f"del Problema '{num}' del Certamen 3 – Series Infinitas (Semestre 2025-2 - Prof. Eligio Colmenares)."
         )
     else:
@@ -493,7 +516,7 @@ async def c3_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
     await update.effective_chat.send_action(ChatAction.TYPING)
     try:
-        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, False)
+        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, bool(num))
         await split_and_send(update, reply)
     except Exception as e:
         await update.message.reply_text(f"❌ {e}")
@@ -503,7 +526,7 @@ async def integradora_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     num = " ".join(context.args) if context.args else ""
     if num:
         prompt = (
-            f"Muéstrame el enunciado y la solución completa paso a paso en formato compacto para mi Galaxy Watch 4 "
+            f"Muéstrame el enunciado y la solución completa paso a paso (sin omitir lím, |...| ni ningún paso algebraico intermedio) "
             f"del Problema '{num}' de la Evaluación Integradora de Cálculo Integral (242150 - Prof. Eligio Colmenares)."
         )
     else:
@@ -515,7 +538,7 @@ async def integradora_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
     await update.effective_chat.send_action(ChatAction.TYPING)
     try:
-        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, False)
+        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, bool(num))
         await split_and_send(update, reply)
     except Exception as e:
         await update.message.reply_text(f"❌ {e}")
@@ -525,7 +548,7 @@ async def test_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     num = " ".join(context.args) if context.args else ""
     if num:
         prompt = (
-            f"Muéstrame el enunciado y la solución justificada paso a paso en formato compacto para mi Galaxy Watch 4 "
+            f"Muéstrame el enunciado y la solución completa paso a paso (sin omitir lím, |...| ni ningún paso algebraico intermedio) "
             f"del ejercicio '{num}' de la Guía de preparación para el test de la Unidad IV (Sucesiones y Series Infinitas)."
         )
     else:
@@ -536,7 +559,7 @@ async def test_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
     await update.effective_chat.send_action(ChatAction.TYPING)
     try:
-        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, False)
+        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, bool(num))
         await split_and_send(update, reply)
     except Exception as e:
         await update.message.reply_text(f"❌ {e}")
@@ -546,7 +569,7 @@ async def listado_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     num = " ".join(context.args) if context.args else ""
     if num:
         prompt = (
-            f"Muéstrame el enunciado y la resolución completa paso a paso en formato compacto para mi Galaxy Watch 4 "
+            f"Muéstrame el enunciado y la resolución completa paso a paso (sin omitir lím, |...| ni ningún paso algebraico intermedio) "
             f"del ejercicio '{num}' del Listado de Cálculo Integral de la Unidad IV (Sucesiones y Series Infinitas 2026-2)."
         )
     else:
@@ -557,7 +580,7 @@ async def listado_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
     await update.effective_chat.send_action(ChatAction.TYPING)
     try:
-        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, False)
+        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, bool(num))
         await split_and_send(update, reply)
     except Exception as e:
         await update.message.reply_text(f"❌ {e}")
@@ -628,7 +651,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
-    caption = update.message.caption or "Resuelve este ejercicio de Cálculo Integral paso a paso en formato compacto para mi reloj."
+    caption = update.message.caption or "Resuelve este ejercicio de Cálculo Integral paso a paso completo (sin omitir lím, |...| ni ningún paso algebraico intermedio)."
     await update.effective_chat.send_action(ChatAction.TYPING)
     try:
         if not GEMINI_API_KEY or genai is None:
