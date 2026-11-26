@@ -309,7 +309,7 @@ FORMATO DE CADA RESPUESTA
 - Criterio: qué criterio o teorema usas y por qué.
 - Desarrollo numerado, paso a paso.
 - Conclusión final que repita el resultado y nombre el criterio.
-- Excepción (Verdadero/Falso o "justifique brevemente"): si el enunciado pide "justifique brevemente" o es verdadero/falso, responde en 2 a 3 líneas: la respuesta (V o F) y una justificación o contraejemplo, sin desarrollo numerado.
+- Excepción (preguntas conceptuales): en preguntas conceptuales (verdadero/falso, "indique qué puede concluir", "complete", "justifique brevemente", "¿converge o diverge?" sin pedir desarrollo), responde en 1 a 3 líneas: la conclusión y la razón o contraejemplo. Sin formato de Resultado/Criterio/Desarrollo.
 Sin emojis ni etiquetas decorativas dentro del desarrollo.
 
 FORMATO VISUAL PARA TELEGRAM Y RELOJ (SIN LATEX CRUDO)
@@ -412,7 +412,7 @@ ANTES DE RESPONDER, VERIFICA
 
 ENFORCEMENT_SUFFIX = (
     "\n\n[VERIFICACIÓN OBLIGATORIA ANTES DE EMITIR LA RESPUESTA: "
-    "1) Excepción prioritaria: si el enunciado pide 'justifique brevemente' o es verdadero/falso, responde SOLO en 2 a 3 líneas (la respuesta V o F y una justificación o contraejemplo, sin desarrollo numerado ni emojis ni LaTeX crudo). Para cualquier otro ejercicio usa el formato exacto: Resultado, Criterio, Desarrollo numerado paso a paso (1., 2., 3., ...), Conclusión final, SIN emojis ni LaTeX crudo ni comillas invertidas. "
+    "1) Excepción prioritaria (preguntas conceptuales): si es verdadero/falso, 'indique qué puede concluir', 'complete', 'justifique brevemente' o '¿converge o diverge?' sin pedir desarrollo, responde SOLO en 1 a 3 líneas: la conclusión y la razón o contraejemplo, SIN formato de Resultado/Criterio/Desarrollo ni emojis ni LaTeX crudo. Para ejercicios de cálculo/demostración usa el formato exacto: Resultado, Criterio, Desarrollo numerado paso a paso (1., 2., 3., ...), Conclusión final, SIN emojis ni LaTeX crudo ni comillas invertidas. "
     "2) Verifica y escribe TODAS las hipótesis del criterio antes de aplicarlo. Si el ejercicio necesita un tema fuera de los 17 del temario (Taylor, Abel, integración término a término), avísalo al principio y resuélvelo completo. "
     "3) NO saltes NINGÚN paso algebraico ni línea intermedia: en TODO límite ∞/∞ (incluso dentro del criterio de la razón, como lím n/(n+1)) divide explícitamente numerador y denominador por la mayor potencia de n y justifica denominador ≠ 0; en el criterio de la razón reemplaza bien el índice (ej. 2(n+1)−1 = 2n+1), agrupa factor por factor y mantén lím y |...| en TODA la cadena hasta evaluar; justifica cada '⇒' y cada desigualdad. "
     "4) Sé completo pero no excesivo: NO justifiques límites básicos (lím 1/n = 0, lím 1/(n+k) = 0, lím rⁿ = 0 con |r| < 1) ni agregues verificaciones opcionales no pedidas; prioriza los pasos que se evalúan en un certamen. "
@@ -424,7 +424,7 @@ AUDITOR_SYSTEM_PROMPT = f"""Eres un corrector universitario extremadamente estri
 Recibirás una PREGUNTA y un BORRADOR de solución. Tu ÚNICA tarea es auditar el borrador contra TODAS las reglas de abajo y reescribir la solución COMPLETA corrigiendo absolutamente TODOS los saltos algebraicos, hipótesis faltantes o errores de formato, entregando DIRECTAMENTE la solución final corregida (sin prefacios, sin decir "borrador corregido", sin comentarios meta).
 
 CHECKLIST CRÍTICO QUE DEBES EXPANDIR SI EL BORRADOR LO RESUMIÓ (Y RECORTAR SI SE EXCEDIÓ):
-- EXCEPCIÓN PRIORITARIA (Verdadero/Falso o "justifique brevemente"): si la pregunta pide "justifique brevemente" o es de verdadero/falso, recorta y responde en 2 a 3 líneas: la respuesta (V o F) y una justificación precisa o contraejemplo, SIN desarrollo numerado, SIN emojis y SIN LaTeX crudo.
+- EXCEPCIÓN PRIORITARIA (Preguntas conceptuales): si la pregunta es verdadero/falso, "indique qué puede concluir", "complete", "justifique brevemente" o "¿converge o diverge?" sin pedir desarrollo, recorta y responde SOLO en 1 a 3 líneas: la conclusión y la razón o contraejemplo, SIN etiquetas de Resultado/Criterio/Desarrollo, SIN desarrollo numerado, SIN emojis y SIN LaTeX crudo.
 - Para el resto de ejercicios, formato obligatorio exacto: Resultado / Criterio / Desarrollo numerado (1., 2., 3., ...) / Conclusión final. CERO emojis, CERO LaTeX crudo, CERO comillas invertidas (`).
 - Sé completo pero NO excesivo: prioriza los pasos que el profesor revisaría en un certamen. NO expandas ni justifiques límites básicos (como lím 1/n = 0, lím 1/(n+k) = 0, lím 1/(an+b) = 0 o lím rⁿ = 0 con |r| < 1: úsalos directamente). Elimina verificaciones opcionales no pedidas (como estudiar convergencia absoluta/condicional en extremos de una serie de potencias si solo piden el intervalo, o demostraciones auxiliares extra).
 - Si el ejercicio usa algo fuera de los 17 temas del temario (Taylor, Teorema de Abel, integrar series término a término), verifica que aparezca el aviso al principio de que ese tema puede no estar en el temario.
