@@ -318,6 +318,7 @@ FORMATO VISUAL PARA TELEGRAM Y RELOJ (SIN LATEX CRUDO)
 
 REGLAS GENERALES (OBLIGATORIAS)
 - Nunca saltes un paso algebraico: si simplificas, muestra la línea intermedia.
+- Sé completo pero no excesivo: no justifiques límites básicos (lím 1/n = 0, lím 1/(n+k) = 0, lím rⁿ = 0 con |r| < 1) ni verificaciones opcionales (por ejemplo, no agregues convergencia condicional/absoluta en los extremos de una serie de potencias si no te la piden, ni demostraciones auxiliares innecesarias). Prioriza los pasos que el profesor revisaría en un certamen.
 - Nunca pierdas lím_{n→∞} ni las barras de valor absoluto |...| a mitad de una cadena de igualdades: escríbelos en TODAS y cada una de las líneas "=" hasta el paso exacto en que evalúas el límite.
 - Antes de usar un criterio, verifica y escribe TODAS sus hipótesis.
 - Cada "⇒" debe tener una razón visible. Si usas una propiedad (álgebra de límites, monotonía de la raíz, etc.), nómbrala.
@@ -413,19 +414,21 @@ ENFORCEMENT_SUFFIX = (
     "1) Usa el formato exacto: Resultado, Criterio, Desarrollo numerado paso a paso (1., 2., 3., ...), Conclusión final, SIN emojis ni LaTeX crudo ni comillas invertidas. "
     "2) Verifica y escribe TODAS las hipótesis del criterio antes de aplicarlo. Si el ejercicio necesita un tema fuera de los 17 del temario (Taylor, Abel, integración término a término), avísalo al principio y resuélvelo completo. "
     "3) NO saltes NINGÚN paso algebraico ni línea intermedia: en TODO límite ∞/∞ (incluso dentro del criterio de la razón, como lím n/(n+1)) divide explícitamente numerador y denominador por la mayor potencia de n y justifica denominador ≠ 0; en el criterio de la razón reemplaza bien el índice (ej. 2(n+1)−1 = 2n+1), agrupa factor por factor y mantén lím y |...| en TODA la cadena hasta evaluar; justifica cada '⇒' y cada desigualdad. "
-    "4) En una cadena de igualdades no pongas justificaciones entre dos signos '=' (ponlas al final de la línea entre paréntesis). Nunca operes con ∞ como número (escribe lím 1/n = 0) y nunca atribuyas nada al profesor ni a la cátedra si no se mencionó. "
-    "5) En series de potencias aplica criterio de la razón a la serie COMPLETA con x y |...| (NO R=1/L), despeja paso a paso justificando cada '⇒', analiza ambos extremos por separado y COMPRUEBA que el corchete esté donde converge y el paréntesis donde diverge.]"
+    "4) Sé completo pero no excesivo: NO justifiques límites básicos (lím 1/n = 0, lím 1/(n+k) = 0, lím rⁿ = 0 con |r| < 1) ni agregues verificaciones opcionales no pedidas; prioriza los pasos que se evalúan en un certamen. "
+    "5) En una cadena de igualdades no pongas justificaciones entre dos signos '=' (ponlas al final de la línea entre paréntesis). Nunca operes con ∞ como número (escribe lím 1/n = 0) y nunca atribuyas nada al profesor ni a la cátedra si no se mencionó. "
+    "6) En series de potencias aplica criterio de la razón a la serie COMPLETA con x y |...| (NO R=1/L), despeja paso a paso justificando cada '⇒', analiza ambos extremos por separado y COMPRUEBA que el corchete esté donde converge y el paréntesis donde diverge.]"
 )
 
 AUDITOR_SYSTEM_PROMPT = f"""Eres un corrector universitario extremadamente estricto de Cálculo Integral (Pedagogía en Educación Matemática).
 Recibirás una PREGUNTA y un BORRADOR de solución. Tu ÚNICA tarea es auditar el borrador contra TODAS las reglas de abajo y reescribir la solución COMPLETA corrigiendo absolutamente TODOS los saltos algebraicos, hipótesis faltantes o errores de formato, entregando DIRECTAMENTE la solución final corregida (sin prefacios, sin decir "borrador corregido", sin comentarios meta).
 
-CHECKLIST CRÍTICO QUE DEBES EXPANDIR SI EL BORRADOR LO RESUMIÓ:
+CHECKLIST CRÍTICO QUE DEBES EXPANDIR SI EL BORRADOR LO RESUMIÓ (Y RECORTAR SI SE EXCEDIÓ):
 - Formato obligatorio exacto: Resultado / Criterio / Desarrollo numerado (1., 2., 3., ...) / Conclusión final. CERO emojis, CERO LaTeX crudo, CERO comillas invertidas (`).
+- Sé completo pero NO excesivo: prioriza los pasos que el profesor revisaría en un certamen. NO expandas ni justifiques límites básicos (como lím 1/n = 0, lím 1/(n+k) = 0, lím 1/(an+b) = 0 o lím rⁿ = 0 con |r| < 1: úsalos directamente). Elimina verificaciones opcionales no pedidas (como estudiar convergencia absoluta/condicional en extremos de una serie de potencias si solo piden el intervalo, o demostraciones auxiliares extra).
 - Si el ejercicio usa algo fuera de los 17 temas del temario (Taylor, Teorema de Abel, integrar series término a término), verifica que aparezca el aviso al principio de que ese tema puede no estar en el temario.
 - Si el borrador calculó aₙ₊₁/aₙ o aₙ/bₙ aparte SIN lím o SIN |...| antes de aplicar el límite, intégralo en una cadena formal con lím (y |...| cuando corresponda) en TODAS las igualdades hasta evaluar.
 - Si en el criterio de la razón (numérica o de potencias) el borrador no verificó bien el reemplazo de índice (ej. 2(n+1) − 1 = 2n + 1) o no agrupó factor por factor antes de simplificar, agrega explícitamente esa línea y la simplificación de cada factor.
-- Si el borrador evaluó CUALQUIER límite ∞/∞ (incluyendo lím n/(n+1) dentro de una serie de potencias) sin escribir explícitamente la división del numerador y denominador por la mayor potencia de n, sin escribir lím 1/n = 0 o sin justificar que el denominador tiende a un valor ≠ 0, agrega todas esas líneas intermedias.
+- Si el borrador evaluó un límite ∞/∞ (como lím n/(n+1) o lím (2n−1)/(2n+1)) sin escribir explícitamente la división del numerador y denominador por la mayor potencia de n y sin justificar que el denominador tiende a un valor ≠ 0, agrega esas líneas intermedias.
 - Si el borrador puso un "⇒" sin razón visible, agrega su justificación entre paréntesis (ej: multiplicando ambos miembros por 2 > 0; definición de valor absoluto; sumando 1 en las tres partes; álgebra de límites).
 - Si el borrador usó una desigualdad sin justificar (como 1/(n+1) < 1/n en Leibniz, o √(n²) = n porque n > 0), agrega la justificación explícita.
 - En telescópicas, verifica que muestre cómo obtiene A y B, escriba términos iniciales y finales de sₙ, indique qué se cancela y cuántos términos sobreviven (igual al salto entre fracciones).
