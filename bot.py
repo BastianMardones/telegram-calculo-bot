@@ -242,86 +242,100 @@ threading.Thread(target=run_health_check_server, daemon=True).start()
 threading.Thread(target=run_keep_alive_pinger, daemon=True).start()
 
 # ============================================================
-# PROMPT SISTEMA: CÁLCULO INTEGRAL STEWART (FORMATO WATCH 4)
+# PROMPT SISTEMA: TUTOR RIGUROSO DE CÁLCULO INTEGRAL
 # ============================================================
-BASE_SYSTEM_INSTRUCTION = """Eres el Tutor Experto de 'Cálculo Integral' (Código 242150, Semestre 2026-2) de la Universidad del Bío-Bío (UBB), cátedra del **Prof. Dr. Eligio Antonio Colmenares**.
+BASE_SYSTEM_INSTRUCTION = """Eres un tutor de Cálculo Integral (Sucesiones y Series Infinitas) para una estudiante de Pedagogía en Educación Matemática. Tu tarea es resolver ejercicios como se escriben en un certamen: completos, justificados y sin saltarte pasos.
 
-Tienes cargados e indexados los 6 documentos oficiales actuales del curso:
-1. **Certamen 3 – Series Infinitas (242150 - Semestre 2025-2 - Prof. Eligio Colmenares, Prioridad Máxima):** Los 6 problemas completos con su solucionario paso a paso:
-   • Problema 1: 3 series numéricas (`∑ 6·2^(2n−1)/3ⁿ`, `∑ (2n²−5n+8)/(−7+8n²)`, y `∑ (3/eⁿ − 2/(5n(n+1)))`).
-   • Problema 2: Serie telescópica `∑ 3/(n(n+3))` expresando `{sₙ}` explícitamente hasta llegar a suma `11/6`.
-   • Problema 3: Comparación por paso al límite para `∑ (2n²+3n)/√(5+n⁵)` comparando con `1/√n` (`L=2`, diverge).
-   • Problema 4: 3 series de potencias indicando centro `a`, radio `R` e intervalo `I` con análisis de extremos.
-   • Problema 5: Demostración de la suma geométrica `∑ xⁿ = 1/(1-x)` en `(-1,1)` y deducción por integración término a término de `tan⁻¹(x) = ∑ (-1)ⁿ x^(2n+1)/(2n+1)`.
-   • Problema 6: Serie de Taylor (Maclaurin) de `f(x) = cos(x)` en `a = 0` por definición de derivadas + `R = +∞, I = ℝ`.
-2. **Evaluación Integradora de Cálculo Integral (242150 - Semestre I-2024 - Prof. Eligio Colmenares, Prioridad Máxima):** Los 5 problemas completos con su solucionario verificado paso a paso:
-   • Problema 1: 6 integrales (sustitución con raíz + división polinómica; completación de cuadrados con integral impropia Tipo 2 escondida en el extremo; integración por partes doble; integral impropia doble en 0⁺ y +∞; sustitución + trigonométrica; fracciones parciales con factor repetido y cuadrático irreducible).
-   • Problema 2: (a) Plantear área entre curvas que se cruzan dentro del intervalo (partir integral en el punto de intersección); (b) Plantear volumen por **secciones transversales conocidas** (cuadrados perpendiculares al eje x, partiendo en la intersección de las parábolas).
-   • Problema 3: Sucesión recurrente (`a₁ = 1, aₙ₊₁ = ½(aₙ + 2/aₙ)`): probar cota cuadrática `aₙ² ≥ 2`, monotonía por diferencia, acotamiento inferior por inducción, convergencia monótona y límite `√2`.
-   • Problema 4: Series numéricas con el criterio específico solicitado (Comparación por paso al límite, Criterio de la Razón con `(1 + 1/n)ⁿ → e`, y Criterio de la Raíz).
-   • Problema 5: Radio e Intervalo de convergencia de Serie de Potencias analizando ambos extremos por separado.
-3. **Guía de preparación para el Test - Unidad IV: Sucesiones y Series Infinitas** (`guia_preparacion_test_unidad_IV_series.pdf`): Mapa conceptual oficial y los 48 ejercicios (Secciones A hasta L).
-4. **Listado de Cálculo Integral de la Unidad IV: Sucesiones y Series Infinitas 2026-2** (`ListadoUnidadI IV 2026.pdf`): Ejercicios 1 al 22 completos.
-5. **Diapositivas oficiales de clases: Sucesiones y Series Infinitas 2026-2** (`SucesionesSeries2026.pdf`, 41 páginas).
-6. **Libro / Apuntes oficiales de clase de Cálculo Integral** (`calculo_integral (10).pdf`, 174 páginas del Prof. Eligio Antonio Colmenares).
+FORMATO DE CADA RESPUESTA
+1. Resultado: una línea con la conclusión (converge/diverge, límite, suma, radio e intervalo, etc.).
+2. Criterio: nombra el criterio o teorema que vas a usar y por qué es el adecuado.
+3. Desarrollo paso a paso, numerado.
+4. Conclusión final que repita el resultado y nombre el criterio usado.
+No uses emojis ni etiquetas decorativas dentro del desarrollo.
 
-REGLAS ESTRICTAS DE FORMATO PARA SAMSUNG GALAXY WATCH 4 (396x396 px) — MODO HOJA DE CERTAMEN ("COPIAR Y PEGAR"):
-1. PROHIBIDO USAR LATEX CRUDO Y PROHIBIDO USAR COMILLAS INVERTIDAS (`) O BLOQUES DE CÓDIGO EN FÓRMULAS:
-   - En el reloj el LaTeX NO se renderiza y las comillas invertidas achican/cortan las fórmulas.
-   - Escribe TODA expresión matemática en texto plano con **Unicode matemático limpio**:
-     • Series y sumas: ∑ₙ₌₁^∞ aₙ, suma parcial s_N
-     • Límites: lím_{n→∞} aₙ = 0
-     • Integrales y raíces: ∫, √(n² + 1), ³√(n³ + 3n)
-     • Fracciones claras en una línea: (2n + 1) / (3n + 4)
-     • Potencias y subíndices Unicode: x², x³, xⁿ, aₙ, aₙ₊₁, bₙ, sₙ
-     • Símbolos: π, ∞, θ, ≈, ≤, ≥, ≠, ⇒, →, ∴, ·
-     • Funciones en español: sen(x), cos(x), tan(x), ln(n), arctan(n)
+FORMATO VISUAL PARA TELEGRAM Y RELOJ (SIN LATEX CRUDO)
+- PROHIBIDO usar LaTeX crudo (prohibido \\frac, \\sum, \\lim, \\int, \\sqrt, \\left, \\right, $$) y PROHIBIDO envolver fórmulas en comillas invertidas (`) o bloques de código.
+- Escribe TODA expresión matemática en Unicode limpio, con líneas claras y verticales (una igualdad por línea cuando sea una cadena):
+  ∑ₙ₌₁^∞ aₙ, lím_{n→∞}, ∫, √(...), ³√(...), x², xⁿ, aₙ, aₙ₊₁, sₙ, π, ∞, ≤, ≥, ≠, ⇒, →, ·, |...|, sen(x), cos(x), tan(x), ln(n), arctan(n).
 
-2. DIRECTO AL GRANO — FORMATO "COPIAR Y PEGAR" PARA HOJA DE CERTAMEN:
-   - Al resolver cualquier ejercicio, **CERO saludos, CERO introducciones, CERO bloques explicativos largos arriba** (NO pongas "🎯 Conclusión", "🔑 Idea clave", "📝 Desarrollo", ni frases pedagógicas de relleno como "Para hallar aₙ₊₁ reemplazamos...", "Usamos la propiedad...", "Aplicando el teorema...", "Cálculo auxiliar:").
-   - Estructura exacta para ejercicios (vertical, 1 igualdad por línea para leer cómodo en el reloj y transcribir directo a la hoja):
-     • Línea 1: Título mínimo + criterio en una línea (ej: **1(a) — Criterio de la Razón**) y la expresión del ejercicio.
-     • Cuerpo: Desarrollo matemático puro paso a paso, línea por línea, con cada igualdad `=`, `⇒` y cálculo intermedio explícito listo para copiar tal cual.
-     • Última línea: Conclusión formal directa con `∴` (ej: `Como L = 4/3 > 1 ⇒ ∴ DIVERGE (Criterio de la Razón).`).
-   - Solo da explicaciones en prosa cuando el usuario pida explícitamente teoría, resumen o formulario (ej: `/series`, `/formulario`, "explícame...").
+REGLAS GENERALES (OBLIGATORIAS)
+- Nunca saltes un paso algebraico. Si simplificas, muestra la línea intermedia.
+- Nunca pierdas lím_{n→∞} ni las barras de valor absoluto |...| a mitad de una cadena de igualdades: escríbelos en TODAS y cada una de las líneas "=" hasta el paso exacto en que evalúas el límite.
+- Antes de usar un criterio, verifica TODAS sus hipótesis y escríbelas (por ejemplo: términos positivos, continuidad, decreciente, límite finito y distinto de 0).
+- Cada "⇒" debe tener una razón visible. Si usas una propiedad (álgebra de límites, monotonía de la raíz, etc.), nómbrala.
+- Usa solo teoremas del curso: definición de límite, álgebra de límites, Teorema del Sándwich, Teorema de Weierstrass (convergencia monótona), inducción, criterios de monotonía (diferencia, cociente, derivada), serie geométrica, telescópica, serie p, serie armónica, criterio de divergencia, criterio de la integral, comparación directa, comparación por paso al límite, criterio de Leibniz, convergencia absoluta y condicional, criterio de la razón, series de potencias. Si un resultado necesita un teorema fuera de esta lista (por ejemplo, el Teorema de Abel), no lo uses en la demostración: dilo en una nota aparte.
+- Nunca atribuyas algo al profesor o a "la cátedra" si no te lo dieron explícitamente.
+- No operes con ∞ como si fuera un número (no escribas "1/∞ = 0"). Escribe "lím 1/n = 0".
+- Distingue "dividir numerador y denominador por n" (no cambia la fracción) de "dividir los miembros de una desigualdad por n > 0" (no cambia el sentido). No confundas las dos cosas.
+- En una cadena de igualdades, no pongas justificaciones entre dos signos "=". Ponlas al final, entre paréntesis.
 
-3. MÁS DESARROLLO POR DEFECTO — PROHIBIDO COPIAR RESÚMENES CORTOS DEL SOLUCIONARIO:
-   - Los solucionarios del material recuperado suelen estar resumidos en 2 o 3 líneas. **NUNCA entregues versiones abreviadas ni te saltes pasos algebraicos.** Desarrolla SIEMPRE el 100% del procedimiento como exige una hoja de certamen para puntaje completo:
-   - **NUNCA perder `lím` ni `|...|`:** En Razón (`L = lím_{n→∞} |aₙ₊₁ / aₙ|`), Raíz (`L = lím_{n→∞} ⁿ√|aₙ|`), Comparación en el límite (`L = lím_{n→∞} (aₙ / bₙ)`), Divergencia (`lím_{n→∞} aₙ`), Telescópicas (`lím_{N→∞} s_N`) e Integrales Impropias (`lím_{b→∞}`, `lím_{t→a⁺}`), **DEBE ir `lím` (y `|...|` cuando corresponda) en TODAS las líneas `=`** hasta evaluar el límite. Jamás calcules `aₙ₊₁ / aₙ` aparte sin `lím` ni `|...|`.
-   - **Elección de criterio con buen desarrollo por defecto:** Si el enunciado solo pide "determine si converge o diverge" sin exigir método y la serie mezcla constantes y potencias exponenciales o factoriales (como `∑ (6·2^(2n−1)) / 3ⁿ`), usa por defecto **Criterio de la Razón** (o **Raíz** si toda la expresión está elevada a `n`), salvo que ya sea una geométrica directa simple (`∑ c·rⁿ` como `3/eⁿ`) o que el usuario pida otro criterio.
-   - **Álgebra y límites SIN saltos:**
-     • En `aₙ₊₁`, escribe primero la sustitución literal de `n` por `(n+1)` y luego simplifica el exponente en la línea siguiente (`2(n+1) − 1 = 2n + 2 − 1 = 2n + 1`).
-     • Muestra división de fracciones → producto, cancelaciones, resta explícita de exponentes con paréntesis (`(2n+1) − (2n−1) = 2n + 1 − 2n + 1 = 2`) y potencias evaluadas (`2²/3 = 4/3`).
-     • En límites racionales o con raíces al infinito (`lím_{n→∞}`), divide SIEMPRE numerador y denominador por la mayor potencia de `n` mostrando cada término `c/n`, `c/n² → 0` antes de escribir el valor final.
-     • En series telescópicas: calcula explícitamente las fracciones parciales (`A` y `B`), expande `s_N` para `n = 1, 2, 3, ..., N` mostrando qué términos se cancelan, simplifica `s_N` y evalúa `S = lím_{N→∞} s_N`.
-     • En comparación en el límite: verifica `aₙ > 0, bₙ > 0`, calcula `L = lím_{n→∞} (aₙ / bₙ)` dividiendo por la mayor potencia de `n`, justifica `∑ bₙ` (ej. serie p con `p = ...`) y concluye.
-     • En series de potencias: halla `R` paso a paso con `L < 1` y analiza **ambos extremos por separado** sustituyendo `x` y justificando cada uno.
-     • En integrales: escribe `u = ...`, `du = ...` (o `u, dv, du, v`), cambio de límites si es definida, antiderivada simplificada, Barrow `[F(x)]_a^b = F(b) − F(a)`, y en impropias (incluidas las escondidas donde se anula el denominador) usa `lím` formal en toda la cadena.
-     • En Taylor/Maclaurin: calcula y evalúa `f(a), f'(a), f''(a), f'''(a), f⁽⁴⁾(a)` antes de armar la serie.
-     • En sucesiones recurrentes: demuestra cota, monotonía `aₙ₊₁ − aₙ`, acotamiento por inducción, cita Teorema de la Convergencia Monótona y resuelve el límite descartando raíces fuera del rango.
-     • En áreas y volúmenes por secciones transversales: verifica siempre si las curvas se cruzan en el intervalo y parte la integral en el cruce (`V = ∫ A(x) dx`).
+SUCESIONES
+- Forma ∞/∞: divide numerador y denominador por la mayor potencia de n, y escribe la división explícitamente.
+- Forma ∞ − ∞: multiplica por el conjugado, usa (A − B)(A + B) = A² − B² y, al meter n dentro de la raíz, justifica que √(n²) = n porque n > 0.
+- Sándwich: escribe las dos cotas, justifica la desigualdad y calcula el límite de cada cota.
+- Inducción: escribe caso base, hipótesis, tesis y paso inductivo. En el paso inductivo, escribe explícitamente la igualdad de la recurrencia que usas (por ejemplo, √(6 + aₖ) = aₖ₊₁).
+- Criterio del cociente para monotonía: primero demuestra que aₙ > 0. Justifica por qué el cociente es menor (o mayor) que 1.
+- Weierstrass: cita la monotonía y la cota ya probadas; al despejar el límite L, justifica qué solución se descarta y por qué.
 
-4. EJEMPLO MODELO OBLIGATORIO DE ESTILO "COPIAR Y PEGAR" (SEGUIR EXACTAMENTE ESTA DENSIDAD Y LIMPIEZA):
-**1(a) — Criterio de la Razón**
-∑ₙ₌₁^∞ (6·2^(2n−1)) / 3ⁿ
+SERIES NUMÉRICAS
+- Geométrica: muestra que aₙ₊₁/aₙ es constante (no depende de n), identifica el primer término y r, verifica |r| < 1 (o |r| ≥ 1 si diverge) y aplica S = a/(1 − r) cuando corresponda.
+- Telescópica: haz fracciones parciales mostrando cómo se obtienen A y B. Escribe varios términos de sₙ, indica qué se cancela y cuántos términos sobreviven al inicio y al final. Calcula lím sₙ.
+- Criterio de divergencia: calcula lím aₙ y concluye solo si es distinto de 0. Si da 0, el criterio no concluye nada.
+- Comparación por paso al límite: explica de dónde sale bₙ (términos dominantes), verifica que ambas series son de términos positivos, calcula L paso a paso, escribe "0 < L < ∞" y justifica por qué ∑ bₙ converge o diverge (serie p con su valor de p, armónica o geométrica).
+- Criterio de la integral: define f con f(n) = aₙ y verifica que es continua, positiva y decreciente (con derivada). Escribe la integral impropia como lím_{b→∞}, calcula la primitiva completa antes de evaluar y justifica el límite. Aclara que el valor de la integral NO es la suma de la serie.
+- Leibniz: verifica las tres condiciones: bₙ > 0, bₙ → 0 y bₙ decreciente (justificando la desigualdad). Si bₙ decrece solo desde cierto n, dilo.
+- Convergencia absoluta o condicional: estudia ∑|aₙ| por separado y concluye cuál de las dos es.
 
-aₙ = (6·2^(2n−1)) / 3ⁿ
-aₙ₊₁ = (6·2^(2(n+1)−1)) / 3^(n+1)
-= (6·2^(2n+2−1)) / 3^(n+1)
-= (6·2^(2n+1)) / 3^(n+1)
+SERIES DE POTENCIAS
+- Identifica el centro a desde la forma (x − a)ⁿ.
+- Aplica el criterio de la razón a la serie COMPLETA, con x incluida y con valor absoluto. Escribe aₙ₊₁ y aₙ por separado antes de simplificar y agrupa factor por factor. No uses la fórmula R = 1/L de los coeficientes.
+- Despeja el intervalo mostrando cada paso (por ejemplo: |x − 1| < 2 ⇒ −2 < x − 1 < 2 ⇒ −1 < x < 3).
+- Revisa CADA extremo por separado: reemplaza x, simplifica los signos con cuidado ((−1)ⁿ·(−1)ⁿ = 1) e indica el criterio que usas.
+- Después de cada extremo, escribe si se incluye o no. Arma el intervalo final con el corchete o paréntesis que corresponde a cada extremo, y verifica que coincide con lo concluido.
+- Si el límite es 0 para todo x, concluye R = ∞; no confundas L = 0 con R = 0.
 
-L = lím_{n→∞} | aₙ₊₁ / aₙ |
-= lím_{n→∞} | [(6·2^(2n+1)) / 3^(n+1)] / [(6·2^(2n−1)) / 3ⁿ] |
-= lím_{n→∞} | (6·2^(2n+1)·3ⁿ) / (6·2^(2n−1)·3^(n+1)) |
-= lím_{n→∞} | 2^((2n+1)−(2n−1)) / 3^((n+1)−n) |
-= lím_{n→∞} | 2^(2n+1−2n+1) / 3^(n+1−n) |
-= lím_{n→∞} | 2² / 3¹ |
-= lím_{n→∞} | 4 / 3 |
-= lím_{n→∞} (4 / 3)
-= 4/3
+TAYLOR / MACLAURIN
+- Escribe la definición, calcula las derivadas y su valor en a, identifica el patrón con una fórmula y arma la serie con el índice correcto (por ejemplo, x²ⁿ y (2n)!).
+- En el criterio de la razón, muestra la simplificación de factoriales: (2n+2)! = (2n+2)(2n+1)·(2n)!.
 
-Como L = 4/3 > 1 ⇒ ∴ **DIVERGE** (Criterio de la Razón).
+INTEGRALES, ÁREAS Y VOLÚMENES (SI EL EJERCICIO ES DE INTEGRACIÓN)
+- Aplica el mismo formato 1-2-3-4 sin emojis y sin saltarte ningún paso algebraico.
+- Escribe explícitamente u, du, cambio de límites en integrales definidas, fracciones parciales paso a paso, y regla de Barrow completa.
+- Si es integral impropia (incluidas discontinuidades en extremos o puntos interiores), escríbela formalmente con lím_{t→...} en toda la cadena hasta evaluar.
+- En áreas y volúmenes por secciones transversales, verifica si las curvas se cruzan en el intervalo y parte la integral en los cruces.
+
+ANTES DE RESPONDER, VERIFICA
+- ¿Nombré el criterio y verifiqué todas sus hipótesis?
+- ¿Hay algún salto algebraico sin línea intermedia?
+- ¿El resultado final coincide con lo que concluí en el desarrollo (sobre todo el intervalo)?
+- ¿Usé algún teorema que no está en la lista del curso?
+- ¿Atribuí algo al profesor sin que me lo dijeran?
 """
+
+ENFORCEMENT_SUFFIX = (
+    "\n\n[VERIFICACIÓN OBLIGATORIA ANTES DE EMITIR LA RESPUESTA: "
+    "1) Usa el formato exacto: 1. Resultado, 2. Criterio, 3. Desarrollo paso a paso numerado (1., 2., 3., ...), 4. Conclusión final, SIN emojis ni LaTeX crudo ni comillas invertidas. "
+    "2) Verifica y escribe TODAS las hipótesis del criterio antes de aplicarlo. "
+    "3) NO saltes NINGÚN paso algebraico ni línea intermedia: en TODO límite ∞/∞ (incluso dentro del criterio de la razón, como lím n/(n+1)) divide explícitamente numerador y denominador por la mayor potencia de n; en el criterio de la razón agrupa factor por factor antes de simplificar y mantén lím y |...| en TODA la cadena de igualdades hasta evaluar; justifica cada '⇒' y cada desigualdad (ej. 1/(n+1) < 1/n porque n+1 > n > 0). "
+    "4) En una cadena de igualdades no pongas justificaciones entre dos signos '=' (ponlas al final de la línea entre paréntesis). Nunca operes con ∞ como número (escribe lím 1/n = 0) y nunca atribuyas nada al profesor ni a la cátedra si no se mencionó en la pregunta. "
+    "5) En series de potencias aplica criterio de la razón a la serie COMPLETA con x y |...| (NO R=1/L), despeja paso a paso justificando cada '⇒' y analiza ambos extremos por separado confirmando que el intervalo final coincide.]"
+)
+
+AUDITOR_SYSTEM_PROMPT = f"""Eres un corrector universitario extremadamente estricto de Cálculo Integral (Pedagogía en Educación Matemática).
+Recibirás una PREGUNTA y un BORRADOR de solución. Tu ÚNICA tarea es auditar el borrador contra TODAS las reglas de abajo y reescribir la solución COMPLETA corrigiendo absolutamente TODOS los saltos algebraicos, hipótesis faltantes o errores de formato, entregando DIRECTAMENTE la solución final corregida (sin prefacios, sin decir "borrador corregido", sin comentarios meta).
+
+CHECKLIST CRÍTICO QUE DEBES EXPANDIR SI EL BORRADOR LO RESUMIÓ:
+- Formato obligatorio exacto: 1. Resultado / 2. Criterio / 3. Desarrollo paso a paso (CON PASOS NUMERADOS 1., 2., 3., ...) / 4. Conclusión final. CERO emojis, CERO LaTeX crudo, CERO comillas invertidas (`).
+- Si el borrador calculó aₙ₊₁/aₙ o aₙ/bₙ aparte SIN lím o SIN |...| antes de aplicar el límite, intégralo en una cadena formal con lím (y |...| cuando corresponda) en TODAS las igualdades hasta evaluar.
+- Si en el criterio de la razón (numérica o de potencias) el borrador no agrupó factor por factor antes de simplificar (ej. [(-1)ⁿ⁺¹/(-1)ⁿ]·[(x−1)ⁿ⁺¹/(x−1)ⁿ]·[n/(n+1)]·[2ⁿ/2ⁿ⁺¹]), agrega explícitamente esa línea y la simplificación de cada factor.
+- Si el borrador evaluó CUALQUIER límite ∞/∞ (incluyendo lím n/(n+1) dentro de una serie de potencias) sin escribir explícitamente la división del numerador y denominador por la mayor potencia de n y sin escribir lím 1/n = 0, agrega todas esas líneas intermedias.
+- Si el borrador puso un "⇒" sin razón visible, agrega su justificación entre paréntesis (ej: multiplicando ambos miembros por 2 > 0; definición de valor absoluto; sumando 1 a los tres miembros; álgebra de límites).
+- Si el borrador usó una desigualdad sin justificar (como 1/(n+1) < 1/n en Leibniz, o √(n²) = n porque n > 0), agrega la justificación explícita.
+- Si el borrador puso explicaciones entre dos signos "=", muévelas al final de la línea entre paréntesis.
+- Verifica que NO aparezca 1/∞ = 0, que NO haya atribuciones al profesor o a la cátedra si la pregunta no las mencionó, que TODOS los teoremas pertenezcan a la lista permitida del curso, y que el intervalo final (corchetes/paréntesis) coincida 100% con el análisis de los extremos.
+
+REGLAS COMPLETAS A CUMPLIR AL 100%:
+{BASE_SYSTEM_INSTRUCTION}"""
 
 SUPERSCRIPTS = str.maketrans("0123456789+-=n", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼ⁿ")
 SUBSCRIPTS = str.maketrans("0123456789+-=nij", "₀₁₂₃₄₅₆₇₈₉₊₋₌ₙᵢⱼ")
@@ -388,7 +402,7 @@ def formatear_para_telegram(texto: str) -> str:
 
     texto = re.sub(r"^(#{1,4})\s*(.+)$", r"<b>\2</b>", texto, flags=re.MULTILINE)
     texto = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", texto)
-    texto = re.sub(r"\*(.+?)\*", r"<i>\1</i>", texto)
+    texto = re.sub(r"(?<!\S)\*(?!\s)(.+?)(?<!\s)\*(?!\S)", r"<i>\1</i>", texto)
 
     for i, cod in enumerate(lineas_codigo):
         texto = texto.replace(f"__LINEA_CODIGO_{i}__", f"<code>{html.escape(cod)}</code>")
@@ -403,12 +417,29 @@ def formatear_para_telegram(texto: str) -> str:
 
     return texto
 
-def dividir_en_chunks_markdown(texto: str, max_len: int = 3600) -> list[str]:
+def dividir_en_chunks_markdown(texto: str, max_len: int = 3400) -> list[str]:
     if len(texto) <= max_len:
         return [texto]
     parrafos = texto.split("\n\n")
-    chunks, chunk_actual, len_actual = [], [], 0
+    unidades = []
     for p in parrafos:
+        if len(p) <= max_len:
+            unidades.append(p)
+        else:
+            sub = []
+            sub_len = 0
+            for linea in p.split("\n"):
+                if sub_len + len(linea) + 1 > max_len and sub:
+                    unidades.append("\n".join(sub))
+                    sub, sub_len = [linea], len(linea)
+                else:
+                    sub.append(linea)
+                    sub_len += len(linea) + 1
+            if sub:
+                unidades.append("\n".join(sub))
+
+    chunks, chunk_actual, len_actual = [], [], 0
+    for p in unidades:
         if len_actual + len(p) + 2 > max_len and chunk_actual:
             chunks.append("\n\n".join(chunk_actual))
             chunk_actual, len_actual = [p], len(p)
@@ -422,22 +453,26 @@ def dividir_en_chunks_markdown(texto: str, max_len: int = 3600) -> list[str]:
 user_histories = {}
 
 def ask_deepseek(user_id: int, message_text: str, use_reasoner: bool = False) -> str:
-    relevant_docs = SEARCH_ENGINE.search(message_text, top_k=6)
+    relevant_docs = SEARCH_ENGINE.search(message_text, top_k=4)
     system_prompt = (
-        f"{BASE_SYSTEM_INSTRUCTION}\n\n"
-        "=== MATERIAL OFICIAL DEL PROF. ELIGIO COLMENARES RECUPERADO ===\n"
+        "=== MATERIAL DE REFERENCIA INDEXADO ===\n"
+        "(Úsalo SOLO para leer enunciados si la estudiante pregunta por un ejercicio del certamen, guía, listado o integradora. "
+        "PROHIBIDO copiar su formato resumido, PROHIBIDO saltarte pasos porque estén abreviados aquí, y PROHIBIDO atribuir algo "
+        "al profesor o a 'la cátedra' si no se mencionó explícitamente en la consulta.)\n"
         f"{relevant_docs}\n"
-        "=== FIN DE MATERIAL RECUPERADO ==="
+        "=== FIN DEL MATERIAL DE REFERENCIA ===\n\n"
+        f"{BASE_SYSTEM_INSTRUCTION}"
     )
 
     if user_id not in user_histories:
         user_histories[user_id] = []
-    if len(user_histories[user_id]) > 6:
-        user_histories[user_id] = user_histories[user_id][-6:]
+    if len(user_histories[user_id]) > 4:
+        user_histories[user_id] = user_histories[user_id][-4:]
 
     messages = [{"role": "system", "content": system_prompt}]
     messages.extend(user_histories[user_id])
-    messages.append({"role": "user", "content": message_text})
+    user_payload_text = f"{message_text}{ENFORCEMENT_SUFFIX}" if use_reasoner else message_text
+    messages.append({"role": "user", "content": user_payload_text})
 
     model_name = "deepseek-reasoner" if use_reasoner else "deepseek-chat"
 
@@ -449,29 +484,77 @@ def ask_deepseek(user_id: int, message_text: str, use_reasoner: bool = False) ->
         payload = {
             "model": model_name,
             "messages": messages,
-            "max_tokens": 8192 if use_reasoner else 4096,
+            "max_tokens": 16384 if use_reasoner else 4096,
         }
         if not use_reasoner:
             payload["temperature"] = 0.1
 
-        resp = requests.post(DEEPSEEK_BASE_URL, headers=headers, json=payload, timeout=120)
+        resp = requests.post(DEEPSEEK_BASE_URL, headers=headers, json=payload, timeout=180)
         if resp.status_code != 200:
             raise RuntimeError(f"DeepSeek API ({resp.status_code}): {resp.text[:300]}")
         data = resp.json()
         reply = data["choices"][0]["message"]["content"]
+
+        # Segunda pasada de auditoría estricta para ejercicios: expande cualquier salto algebraico,
+        # hipótesis omitida, límite sin dividir por la mayor potencia o '⇒' sin razón.
+        if use_reasoner and reply.strip():
+            try:
+                audit_payload = {
+                    "model": "deepseek-reasoner",
+                    "messages": [
+                        {"role": "system", "content": AUDITOR_SYSTEM_PROMPT},
+                        {
+                            "role": "user",
+                            "content": (
+                                f"PREGUNTA DE LA ESTUDIANTE:\n{message_text}\n\n"
+                                f"BORRADOR A AUDITAR Y EXPANDIR SIN SALTAR NINGÚN PASO:\n{reply}"
+                            ),
+                        },
+                    ],
+                    "max_tokens": 16384,
+                }
+                audit_resp = requests.post(DEEPSEEK_BASE_URL, headers=headers, json=audit_payload, timeout=180)
+                if audit_resp.status_code == 200:
+                    audited = audit_resp.json()["choices"][0]["message"]["content"]
+                    if audited and audited.strip():
+                        reply = audited
+            except Exception as audit_err:
+                logger.warning(f"Auditoría segunda pasada omitida por error: {audit_err}")
+
         user_histories[user_id].append({"role": "user", "content": message_text})
         user_histories[user_id].append({"role": "assistant", "content": reply})
         return reply
 
     if GEMINI_API_KEY and genai is not None:
         model = genai.GenerativeModel("gemini-2.5-flash", system_instruction=system_prompt)
-        res = model.generate_content(message_text)
+        res = model.generate_content(user_payload_text)
         return res.text
 
     raise RuntimeError("Configura tu DEEPSEEK_API_KEY en el archivo .env o en Render.")
 
+async def ask_with_typing(update: Update, user_id: int, prompt: str, use_reasoner: bool = False) -> str:
+    stop_event = asyncio.Event()
+
+    async def keep_typing():
+        while not stop_event.is_set():
+            try:
+                await update.effective_chat.send_action(ChatAction.TYPING)
+            except Exception:
+                pass
+            try:
+                await asyncio.wait_for(stop_event.wait(), timeout=4.0)
+            except asyncio.TimeoutError:
+                pass
+
+    typing_task = asyncio.create_task(keep_typing())
+    try:
+        return await asyncio.to_thread(ask_deepseek, user_id, prompt, use_reasoner)
+    finally:
+        stop_event.set()
+        await typing_task
+
 async def split_and_send(update: Update, text: str):
-    for chunk in dividir_en_chunks_markdown(text, max_len=3600):
+    for chunk in dividir_en_chunks_markdown(text, max_len=3400):
         chunk_html = formatear_para_telegram(chunk)
         try:
             await update.message.reply_text(chunk_html, parse_mode=ParseMode.HTML)
@@ -514,8 +597,7 @@ async def c3_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     num = " ".join(context.args) if context.args else ""
     if num:
         prompt = (
-            f"Resuelve directamente en modo hoja de certamen (sin introducción explicativa, sin omitir lím, |...| ni pasos algebraicos intermedios) "
-            f"el Problema '{num}' del Certamen 3 – Series Infinitas (Semestre 2025-2 - Prof. Eligio Colmenares)."
+            f"Resuelve completo y sin saltarte pasos el Problema '{num}' del Certamen 3 – Series Infinitas (2025-2)."
         )
     else:
         prompt = (
@@ -525,9 +607,8 @@ async def c3_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "5. Demostración de 1/(1-x) y tan⁻¹(x), 6. Serie de Taylor de cos(x) en a=0 + R e I, "
             "y dime que puedo escribir /c3 [1a..6] para ver cualquier solución paso a paso."
         )
-    await update.effective_chat.send_action(ChatAction.TYPING)
     try:
-        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, bool(num))
+        reply = await ask_with_typing(update, user_id, prompt, bool(num))
         await split_and_send(update, reply)
     except Exception as e:
         await update.message.reply_text(f"❌ {e}")
@@ -537,8 +618,7 @@ async def integradora_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     num = " ".join(context.args) if context.args else ""
     if num:
         prompt = (
-            f"Resuelve directamente en modo hoja de certamen (sin introducción explicativa, sin omitir lím, |...| ni pasos algebraicos intermedios) "
-            f"el Problema '{num}' de la Evaluación Integradora de Cálculo Integral (242150 - Prof. Eligio Colmenares)."
+            f"Resuelve completo y sin saltarte pasos el Problema '{num}' de la Evaluación Integradora de Cálculo Integral."
         )
     else:
         prompt = (
@@ -547,9 +627,8 @@ async def integradora_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "3. Sucesión recurrente aₙ₊₁=½(aₙ+2/aₙ), 4. Series por Comparación límite, Razón y Raíz, y 5. Radio e intervalo de convergencia, "
             "y dime que puedo escribir /integradora [1a..5] o /practicar integradora."
         )
-    await update.effective_chat.send_action(ChatAction.TYPING)
     try:
-        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, bool(num))
+        reply = await ask_with_typing(update, user_id, prompt, bool(num))
         await split_and_send(update, reply)
     except Exception as e:
         await update.message.reply_text(f"❌ {e}")
@@ -559,8 +638,7 @@ async def test_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     num = " ".join(context.args) if context.args else ""
     if num:
         prompt = (
-            f"Resuelve directamente en modo hoja de certamen (sin introducción explicativa, sin omitir lím, |...| ni pasos algebraicos intermedios) "
-            f"el ejercicio '{num}' de la Guía de preparación para el test de la Unidad IV (Sucesiones y Series Infinitas)."
+            f"Resuelve completo y sin saltarte pasos el ejercicio '{num}' de la Guía de preparación para el test de la Unidad IV (Sucesiones y Series Infinitas)."
         )
     else:
         prompt = (
@@ -568,9 +646,8 @@ async def test_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "de la Guía de preparación para el test de la Unidad IV (Series Infinitas) del Prof. Eligio Colmenares, "
             "y dime que puedo escribir /test [número] (ej: /test 1, /test 15, /test 48) para ver cualquier ejercicio resuelto."
         )
-    await update.effective_chat.send_action(ChatAction.TYPING)
     try:
-        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, bool(num))
+        reply = await ask_with_typing(update, user_id, prompt, bool(num))
         await split_and_send(update, reply)
     except Exception as e:
         await update.message.reply_text(f"❌ {e}")
@@ -580,8 +657,7 @@ async def listado_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     num = " ".join(context.args) if context.args else ""
     if num:
         prompt = (
-            f"Resuelve directamente en modo hoja de certamen (sin introducción explicativa, sin omitir lím, |...| ni pasos algebraicos intermedios) "
-            f"el ejercicio '{num}' del Listado de Cálculo Integral de la Unidad IV (Sucesiones y Series Infinitas 2026-2)."
+            f"Resuelve completo y sin saltarte pasos el ejercicio '{num}' del Listado de Cálculo Integral de la Unidad IV (Sucesiones y Series Infinitas 2026-2)."
         )
     else:
         prompt = (
@@ -589,9 +665,8 @@ async def listado_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "(Sucesiones: ejercicios 1 al 13; Series Infinitas y de Potencias: ejercicios 12 al 22) del Prof. Eligio Colmenares, "
             "y dime que puedo escribir /listado [número] (ej: /listado 5, /listado 14, /listado 22) para resolver cualquiera."
         )
-    await update.effective_chat.send_action(ChatAction.TYPING)
     try:
-        reply = await asyncio.to_thread(ask_deepseek, user_id, prompt, bool(num))
+        reply = await ask_with_typing(update, user_id, prompt, bool(num))
         await split_and_send(update, reply)
     except Exception as e:
         await update.message.reply_text(f"❌ {e}")
@@ -643,9 +718,8 @@ async def r1_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not q:
         await update.message.reply_text("💡 Uso: <code>/r1 [integral o problema]</code>", parse_mode=ParseMode.HTML)
         return
-    await update.effective_chat.send_action(ChatAction.TYPING)
     try:
-        reply = await asyncio.to_thread(ask_deepseek, user_id, q, True)
+        reply = await ask_with_typing(update, user_id, q, True)
         await split_and_send(update, reply)
     except Exception as e:
         await update.message.reply_text(f"❌ {e}")
@@ -653,16 +727,15 @@ async def r1_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     user_text = update.message.text
-    await update.effective_chat.send_action(ChatAction.TYPING)
     try:
-        reply = await asyncio.to_thread(ask_deepseek, user_id, user_text, True)
+        reply = await ask_with_typing(update, user_id, user_text, True)
         await split_and_send(update, reply)
     except Exception as e:
         await update.message.reply_text(f"❌ Error: {e}")
 
 async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
-    caption = update.message.caption or "Resuelve este ejercicio directamente en modo hoja de certamen (sin introducción explicativa, sin omitir lím, |...| ni pasos algebraicos intermedios)."
+    caption = update.message.caption or "Resuelve este ejercicio completo, justificado y sin saltarte ningún paso."
     await update.effective_chat.send_action(ChatAction.TYPING)
     try:
         if not GEMINI_API_KEY or genai is None:
@@ -682,7 +755,7 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
             ["Transcribe con total precisión todas las integrales, límites, funciones y enunciados matemáticos de esta imagen:", image],
         )
         full_query = f"[Ejercicio matemático extraído de foto]:\n{ocr_res.text}\n\nInstrucción: {caption}"
-        reply = await asyncio.to_thread(ask_deepseek, user_id, full_query, True)
+        reply = await ask_with_typing(update, user_id, full_query, True)
         await split_and_send(update, reply)
     except Exception as e:
         await update.message.reply_text(f"❌ Error en foto: {e}")
