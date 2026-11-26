@@ -136,8 +136,18 @@ STOPWORDS = {
 }
 
 def tokenize(text: str) -> list[str]:
-    words = re.findall(r"[a-zA-ZáéíóúñÁÉÍÓÚÑ0-9_]{2,}", text.lower())
-    return [w for w in words if w not in STOPWORDS]
+    low = text.lower()
+    # Normalizar referencias tipo "4(c)" o "4 (c)" -> "4c" y "problema 4" -> "problema_4"
+    extra = []
+    for num, let in re.findall(r"(\d+)\s*\(([a-f])\)", low):
+        extra.extend([f"{num}{let}", num])
+    for num in re.findall(r"(?:problema|ejercicio|ej\.?|inciso|parte)\s*(\d+[a-f]?)", low):
+        extra.append(f"problema_{num}")
+        m_num = re.match(r"(\d+)", num)
+        if m_num:
+            extra.append(f"problema_{m_num.group(1)}")
+    words = re.findall(r"[a-zA-ZáéíóúñÁÉÍÓÚÑ0-9_]{2,}|[0-9]", low)
+    return [w for w in (words + extra) if w not in STOPWORDS]
 
 class SmartDocumentIndex:
     def __init__(self, index_path: Path):
@@ -213,11 +223,37 @@ class SmartDocumentIndex:
     def search(self, query: str, top_k: int = 4) -> str:
         if not self.chunks:
             return ""
+        low_q = query.lower()
+
+        # Enrutamiento directo cuando preguntan explícitamente por Certamen 3 o Evaluación Integradora
+        if re.search(r"\b(certamen\s*3|certamen3|c3)\b", low_q):
+            c3_chunks = [c for c in self.chunks if c["category"] == "CERTAMEN_3_SERIES_INFINITAS"]
+            if c3_chunks:
+                return "\n\n---\n\n".join(f"[{c['title']}]\n{c['text']}" for c in c3_chunks)
+
+        if "integradora" in low_q:
+            int_chunks = [c for c in self.chunks if c["category"] == "EVALUACION_INTEGRADORA"]
+            if int_chunks:
+                q_toks = set(tokenize(query))
+                int_chunks_sorted = sorted(
+                    int_chunks,
+                    key=lambda ch: sum(ch["tf"].get(t, 0) for t in q_toks),
+                    reverse=True,
+                )
+                selected = int_chunks_sorted[:5]
+                return "\n\n---\n\n".join(f"[{c['title']}]\n{c['text']}" for c in selected)
+
         q_tokens = tokenize(query)
         if not q_tokens:
             selected = self.chunks[:3]
         else:
             N = len(self.chunks)
+            cat_boost = None
+            if "listado" in low_q:
+                cat_boost = "UNIDAD_IV_SUCESIONES_SERIES"
+            elif re.search(r"\b(gu[ií]a|test)\b", low_q):
+                cat_boost = "UNIDAD_IV_TEST_SERIES"
+
             scored = []
             for idx, ch in enumerate(self.chunks):
                 score = 0.0
@@ -230,6 +266,8 @@ class SmartDocumentIndex:
                         score += idf * ((f * 2.5) / denom)
                 if score > 0:
                     score *= (ch["priority"] / 2.0)
+                    if cat_boost and ch["category"] == cat_boost:
+                        score *= 2.5
                     scored.append((score, idx))
             scored.sort(key=lambda x: x[0], reverse=True)
             selected = [self.chunks[i] for _, i in scored[:top_k]]
